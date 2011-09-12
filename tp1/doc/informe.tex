@@ -1,0 +1,769 @@
+\documentclass[journal, monochrome]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[monochrome]{color}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyvrb}
+\usepackage{dsfont}
+\usepackage{subfigure}
+\usepackage{natbib}
+
+\ifCLASSINFOpdf
+\else
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
+% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
+% especially mdwmath.sty and mdwtab.sty which are used to format equations
+% and tables, respectively. The MDWtools set is already installed on most
+% LaTeX systems. The lastest version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+%\usepackage{eqparbox}
+% Also of notable interest is Scott Pakin's eqparbox package for creating
+% (automatically sized) equal width boxes - aka "natural width parboxes".
+% Available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
+
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\usepackage[tight,footnotesize]{subfigure}
+% subfigure.sty was written by Steven Douglas Cochran. This package makes it
+% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
+% work, it is a good idea to load it with the tight package option to reduce
+% the amount of white space around the subfigures. subfigure.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
+% subfigure.sty has been superceeded by subfig.sty.
+
+
+
+%\usepackage[caption=false]{caption}
+%\usepackage[font=footnotesize]{subfig}
+% subfig.sty, also written by Steven Douglas Cochran, is the modern
+% replacement for subfigure.sty. However, subfig.sty requires and
+% automatically loads Axel Sommerfeldt's caption.sty which will override
+% IEEEtran.cls handling of captions and this will result in nonIEEE style
+% figure/table captions. To prevent this problem, be sure and preload
+% caption.sty with its "caption=false" package option. This is will preserve
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% (recommended due to many improvements over 1.2) of subfig.sty supports
+% the caption=false option directly:
+%\usepackage[caption=false,font=footnotesize]{subfig}
+%
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+% The latest version and documentation of caption.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Documentation is contained in the stfloats.sty comments as well as in the
+% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
+% does not allow \baselineskip to stretch. Authors submitting work to the
+% IEEE should note that IEEE rarely uses double column equations and
+% that authors should try to avoid such use. Do not be tempted to use the
+% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
+% not format its papers in such ways.
+
+
+%\ifCLASSOPTIONcaptionsoff
+%  \usepackage[nomarkers]{endfloat}
+% \let\MYoriglatexcaption\caption
+% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+%\fi
+% endfloat.sty was written by James Darrell McCauley and Jeff Goldberg.
+% This package may be useful when used in conjunction with IEEEtran.cls'
+% captionsoff option. Some IEEE journals/societies require that submissions
+% have lists of figures/tables at the end of the paper and that
+% figures/tables without any captions are placed on a page by themselves at
+% the end of the document. If needed, the draftcls IEEEtran class option or
+% \CLASSINPUTbaselinestretch interface can be used to increase the line
+% spacing as well. Be sure and use the nomarkers option of endfloat to
+% prevent endfloat from "marking" where the figures would have been placed
+% in the text. The two hack lines of code above are a slight modification of
+% that suggested by in the endfloat docs (section 8.3.1) to ensure that
+% the full captions always appear in the list of figures/tables - even if
+% the user used the short optional argument of \caption[]{}.
+% IEEE papers do not typically make use of \caption[]'s optional argument,
+% so this should not be an issue. A similar trick can be used to disable
+% captions of packages such as subfig.sty that lack options to turn off
+% the subcaptions:
+% For subfig.sty:
+% \let\MYorigsubfloat\subfloat
+% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
+% For subfigure.sty:
+% \let\MYorigsubfigure\subfigure
+% \renewcommand{\subfigure}[2][\relax]{\MYorigsubfigure[]{#2}}
+% However, the above trick will not work if both optional arguments of
+% the \subfloat/subfig command are used. Furthermore, there needs to be a
+% description of each subfigure *somewhere* and endfloat does not add
+% subfigure captions to its list of figures. Thus, the best approach is to
+% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
+% and instead reference/explain all the subfigures within the main caption.
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/endfloat/
+%
+% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
+% later in the document, say, to conditionally put the References on a 
+% page by themselves.
+
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
+% Read the url.sty source comments for usage information. Basically,
+% \url{my_url_here}.
+
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Convivencia y evolución en un sistema presa-predador}
+%
+%
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+%
+
+\author{\textbf{Primer autor:}	Alejandro Magnorsky\\
+		\textbf{Co-autores:}	Matías Colotto,
+								Andrés Mata Suárez,
+								Mariano Merchante,
+								Ezequiel Scaruli \\[5px]
+        Instituto Tecnológico de Buenos Aires}
+        
+% note the % following the last \IEEEmembership and also \thanks - 
+% these prevent an unwanted space from occurring between the last author name
+% and the end of the author line. i.e., if you had this:
+% 
+% \author{....lastname \thanks{...} \thanks{...} }
+%                     ^------------^------------^----Do not want these spaces!
+%
+% a space would be appended to the last name and could cause every name on that
+% line to be shifted left slightly. This is one of those "LaTeX things". For
+% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
+% "AB" then you have to do: "\textbf{A}\textbf{B}"
+% \thanks is no different in this regard, so shield the last } of each \thanks
+% that ends a line with a % and do not let a space in before the next \thanks.
+% Spaces after \IEEEmembership other than the last one are OK (and needed) as
+% you are supposed to have spaces between the names. For what it is worth,
+% this is a minor point as most people would not even notice if the said evil
+% space somehow managed to creep in.
+
+
+
+% The paper headers
+%\markboth{Template para los informes de SS, 2011}
+%{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Journals}
+% The only time the second header will appear is for the odd numbered pages
+% after the title page when using the twoside option.
+% 
+% *** Note that you probably will NOT want to include the author's ***
+% *** name in the headers of peer review papers.                   ***
+% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
+% you desire.
+
+
+
+
+% If you want to put a publisher's ID mark on the page you can do it like
+% this:
+%\IEEEpubid{0000--0000/00\$00.00~\copyright~2007 IEEE}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+
+
+
+
+
+
+
+
+
+% make the title area
+\maketitle
+
+\renewcommand{\abstractname}{Resumen}
+\renewcommand{\IEEEkeywordsname}{Palabras clave}
+\renewcommand{\refname}{Referencias}
+\renewcommand{\tablename}{Tabla}
+
+\begin{abstract}
+\boldmath
+Un ecosistema acuático en el que existen poblaciones de \textit{Tiburones Pintarrojo} y \textit{Salmones de Mar} puede estudiarse para analizar la convivencia entre
+presas y predadores. Existe una forma de representar dicho ecosistema, y es mediante un modelo basado
+en ecuaciones diferenciales. El siguiente artículo está orientado a analizar
+dicho modelo. En base a datos de observaciones empíricas se realiza una simulación numérica 
+para obtener funciones que representen las poblaciones de presas y predadores. Luego
+se realiza un análisis de cómo el período de dichas funciones varía en función de los parámetros constantes de las ecuaciones diferenciales.
+Se obtienen las poblaciones de equilibrio del sistema. Además, a fin de simplificar
+el modelo, se propone una linealización del mismo.
+\end{abstract}
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the journal you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals frown on math
+% in the abstract anyway.
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Convivencia presa-predador; \textit{Lotka-Volterra}; ecosistema acuático.
+\end{IEEEkeywords}
+
+
+
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+\vspace{0.5cm}
+
+\section{Introducción}
+
+La manera en que se relacionan las presas y los predadores en un ecosistema natural
+es interesante y ocupa un papel preponderante en la teoría ecologista. Su
+análisis puede resultar útil en ciertas aplicaciones, tales como la predicción
+de la posible extinción de una especie, así como la procreación intencional de
+ciertos predadores para evitar el crecimiento descontrolado de una plaga. Es interesante saber entonces, dado un ecosistema, bajo qué condiciones
+se establece una convivencia entre presas y predadores, o si alguna de las
+dos poblaciones termina desapareciendo.\\
+
+Existen varios modelos para representar la dinámica de un sistema presa-predador.
+En este artículo se adopta el modelo dinámico de \textit{Lotka-Volterra-Ancona}\footnote{Alfred James Lotka (1880-1949) fue un matemático estadounidense, especializado en estadística. 
+Vito Volterra (1860-1940) fue un matemático y físico italiano. Umberto d’Ancona, cuñado de Vito Volterra, era un pescador italiano.},
+que constituye un gran avance en el estudio de estas poblaciones ocurrido entre los años
+1925 y 1928.\\
+
+En la sección \ref{section:development}, se presentan las ecuaciones diferenciales
+que constituyen el modelo mencionado en el párrafo anterior y se lo clasifica. Se realiza una simulación numérica para, en base al modelo y a observaciones empíricas, obtener curvas que 
+representen a las poblaciones de presas y predadores. Se grafica la trayectoria del \textit{espacio de fases}. Se analiza el comportamiento de las curvas en base a los parámetros constantes 
+de las ecuaciones diferenciales y se encuentran las poblaciones de equilibrio. Finalmente, se realiza una linealización del sistema.\\
+
+La sección \ref{section:results} contiene los resultados obtenidos luego de realizar los distintos análisis de la sección \ref{section:development}. Además, se realizan observaciones sobre los mismos.\\
+
+%-------------------------------------------------------------------------
+\section{Desarrollo}
+\label{section:development}
+
+El modelo de \textit{Lotka-Volterra-Ancona} propone las siguientes ecuaciones diferenciales \citep{berryman}:
+\begin{equation}
+\dot{x} = \lambda x - a x y
+\label{equation:preys}
+\end{equation}
+\begin{equation}
+\dot{y} = b x y - \mu y
+\label{equation:predators}
+\end{equation}
+$x(t)$ representa la población de presas, e $y(t)$ la de predadores. Las constantes $\lambda$, $\mu$, $a$ y $b$ son positivas y su significado se explica a continuación. 
+$\lambda$ representa la tasa de crecimiento poblacional de las presas en ausencia de predadores; en cambio, $\mu$ simboliza la tasa de mortalidad de la población de predadores 
+en ausencia de presas. Por otro lado, $a$ representa un factor del medio ambiente que afecta las probabilidades de encuentro entre presas y predadores. $b$ simboliza la tasa de éxito 
+ante un encuentro, es decir, cómo crece la población de predadores cuando uno de ellos se topa con una presa. Como puede verse en las ecuaciones \ref{equation:preys} y \ref{equation:predators}, 
+los encuentros son beneficiosos para los predadores y perjudiciales para las presas.\\
+
+Las ecuaciones \ref{equation:preys} y \ref{equation:predators} muestran que el modelo del sistema no es lineal. Esto se debe a que la velocidad con que disminuyen las presas es 
+proporcional al producto de las poblaciones de presas y predadores; lo mismo sucede para la velocidad con que aumentan los predadores. El hecho de que el modelo esté representado 
+por ecuaciones diferenciales da la pauta de que es un modelo dinámico. Además, es determinista ya que no intervienen variables aleatorias. Es un modelo invariante en el tiempo
+porque en las ecuaciones \ref{equation:preys} y \ref{equation:predators} las derivadas $\dot{x}$ e $\dot{y}$ no dependen explícitamente del tiempo. Es un modelo
+continuo ya que $t$ es una variable continua.\\
+
+Es importante notar que el modelo no contempla ningún tipo de entrada al sistema; esto da a entender que el modelo considera que el sistema está aislado. Como además es invariante
+en el tiempo, el modelo representa un sistema autónomo y, por lo tanto, sólo puede cambiar mediante sus condiciones iniciales. Si bien esto no es lo que ocurre en la realidad,
+es una consecuencia de las hipótesis tomadas por los autores del modelo para simplificarlo.\\
+
+A partir de \ref{equation:preys} y \ref{equation:predators}, se puede lograr la expresión
+\begin{equation}
+\frac{\dot{y}}{\dot{x}} = \frac{b x y - \mu y}{\lambda x - a x y}
+\end{equation}
+Separando, integrando y reordenando los términos se obtiene
+\begin{equation}
+\lambda \ln y - a y - b x + \mu \ln x = K
+\label{equation:phaseSpace}
+\end{equation}
+donde $K$ es una constante que depende de las condiciones iniciales del modelo ($x(t_0)$ e $y(t_0)$).
+Esta ecuación representa la curva correspondiente a la trayectoria del modelo en el \emph{espacio de fases} $(x, y)$ del sistema.
+
+\subsection{Desconocimiento del valor de un parámetro}
+
+Es posible que, en un caso experimental, se tenga un conjunto de datos $(t_k, x_k, y_k)$, donde $x_k = x(t_k)$ e $y_k = y(t_k)$ (con $k \in \{1, 2, \dots, n\}$) 
+y se quiera, a partir de éstos, conseguir la expresión del espacio de fases del sistema correspondiente a la ecuación \ref{equation:phaseSpace}. Para ello, es 
+necesario conocer los valores de las constantes $a$, $b$, $\lambda$ y $\mu$. Sin embargo, es posible que alguno de estos valores no sea conocido. Se analiza 
+aquí el caso en que $a = 0.02 \text{ yr}^{-1}$, $b = 0.0035 \text{ yr}^{-1}$, $\lambda = 1.5 \text{ yr}^{-1}$ y no se conoce el valor de $\mu$. Los datos experimentales para los cuales se hace este análisis corresponden a las poblaciones observadas en la figura \ref{figure:populations}.\\
+
+\begin{figure*}[htbp]
+	\centering
+	\includegraphics[scale = 0.5]{img/populations.png}
+	\caption{Gráfico de las poblaciones en función del tiempo para el conjunto de datos utilizado.}
+	\label{figure:populations}
+\end{figure*}
+
+Una manera de calcular el valor de $\mu$ es ajustando los puntos del conjunto de datos a la trayectoria en el espacio de fases mediante cuadrados mínimos. Para ello, 
+se reordenan los términos de la ecuación \ref{equation:phaseSpace}:
+\begin{equation}
+K - \mu \ln x = \lambda \ln y - a y - b x
+\end{equation}
+Al utilizar los pares $(x_k, y_k)$ del conjunto de datos, puede escribirse esta ecuación para cada uno de los $k$ valores, obteniendo un sistema de ecuaciones en forma matricial:
+\begin{equation}
+\left(
+\begin{array}{c c}
+1 & -\ln x_1 \\
+1 & -\ln x_2 \\
+\vdots \\
+1 & - \ln x_n \\
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+K \\
+\mu
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+\lambda \ln y_1 - a y_1 - b x_1 \\
+\lambda \ln y_2 - a y_2 - b x_2 \\
+\vdots \\
+\lambda \ln y_n - a y_n - b x_n \\
+\end{array}
+\right)
+\label{equation:lsSystemSolution}
+\end{equation}
+Este modelo tiene la forma $A \vec{x} = \vec{b}$ correspondiente a un problema de cuadrados mínimos. A partir de la resolución del mismo, 
+mediante $\vec{x} = (A^\text{T} A)^{-1} A^\text{T} \vec{b}$,
+se puede obtener el valor de las constantes $\mu$ y $K$ y, así, disponer de todos los valores necesarios para construir el espacio de fases del sistema.
+
+\subsection{Poblaciones de equilibrio}
+
+Es interesante analizar el caso en que las poblaciones de presas y predadores no varían con el tiempo. Esto se traduce a 
+que la velocidad con que cambia la población con respecto al tiempo es igual a 0, es decir, $\dot{x} = 0$ y $\dot{y} = 0$.\\
+
+Pidiendo $\dot{x} = 0$ y $\dot{y} = 0$ en las ecuaciones \ref{equation:preys} y \ref{equation:predators} respectivamente, resulta: 
+\begin{equation}
+0 = x_{eq}(\lambda - ay_{eq})
+\label{equation:y_eq1}
+\end{equation}
+\begin{equation}
+0 = y_{eq}(bx_{eq} - \mu)
+\label{equation:x_eq1}
+\end{equation}
+
+El punto de equilibrio encontrado mediante las ecuaciones \ref{equation:y_eq1} y 
+\ref{equation:x_eq1} es:
+\begin{equation}
+(x_{eq}, y_{eq}) = \left(\frac{\mu}{b}, \frac{\lambda}{a}\right)
+\label{equation:eq1}
+\end{equation}
+
+Se trata de un punto de equilibrio neutralmente estable ya que las órbitas del espacio de fases $(x, y)$ son trayectorias cerradas, por lo que los valores de
+$x$ e $y$ están controlados. Es decir, $\lim\limits_{t\rightarrow\infty} x(t) \neq \infty$,  $\lim\limits_{t\rightarrow\infty} x(t) \neq 0$, $\lim\limits_{t\rightarrow\infty} y(t) \neq \infty$ y $\lim\limits_{t\rightarrow\infty} y(t) \neq 0$.\\
+
+Puede darse una situación en la que, para ciertas poblaciones iniciales, alguna de las poblaciones muere. Esto representa un 
+problema en el ecosistema dado que, si los predadores mueren, la población de presas aumenta indefinidamente con el tiempo. 
+Por otro lado, si las presas mueren, los predadores también mueren luego de un tiempo porque no tienen fuente de alimentación. 
+Por lo tanto, hay que analizar para qué valores de $x_{0} = x(t_{0})$ e $y_{0} = y(t_{0})$ se cumple que $x(t) \geq 1$ e $y(t) \geq 1 \\ \forall t \geq t_{0}$, dados $\lambda$, $\mu$, $a$ y $b$.
+Este problema se analiza en detalle mediante la realización de simulaciones.
+
+\subsection{Linealización del modelo}
+Una posible simplificación del modelo propuesto por las ecuaciones \ref{equation:preys} y \ref{equation:predators} consiste en una linealización. Para ello, es necesario considerar que las poblaciones se mantienen cercanas a las de equilibrio. Dicha linealización requiere herramientas del cálculo vectorial. Si se define el vector:
+
+\begin{equation}
+X = \left(\begin{array}{c}
+x \\
+y \end{array} \right)
+\label{equation:vectorDefinition}
+\end{equation}
+
+con $x$ e $y$ las poblaciones de presas y predadores respectivamente, el modelo puede ser representado como una función $ F:\mathds{R}^{2} \rightarrow \mathds{R}^{2}$ tal que:
+\begin{equation}
+X' = F(X) = \left(\begin{array}{c}
+\lambda x - axy \\
+bxy - \mu y \end{array} \right)
+\label{equation:systemFunctionDefinition}
+\end{equation}
+
+Una manera de aproximar la función $F$ en un punto $P = (x_0,y_0)$ de $F$ es mediante la matriz Jacobiana de la misma. Puede probarse que la siguiente relación es válida:
+
+\begin{equation}
+F(X) \approx F(P) + J_{F}(P)(X-P)
+\label{equation:functionLinearization}
+\end{equation}
+
+donde $J_{F}(P)$ es la matriz Jacobiana de la función $F$ evaluada en el punto $P$. Dicha matriz está dada por:
+
+\begin{equation}
+J_{F}(x, y) = \left(\begin{array}{cc}
+\frac{\partial F_{x}}{\partial x} & \frac{\partial F_{x}}{\partial y} \\
+\frac{\partial F_{y}}{\partial x} & \frac{\partial F_{y}}{\partial y}\end{array} \right) = \left(\begin{array}{cc}
+\lambda - ay & -ax \\
+by & bx-\mu \end{array} \right)
+\label{equation:genericJacobian}
+\end{equation}
+
+Con esta información se puede aproximar $F$ en puntos cercanos a  $X_{eq} = (\frac{\mu}{b}, \frac{\lambda}{a})$ según la ecuación \ref{equation:functionLinearization}. Si se define
+\begin{equation}
+A = J_{F}(X_{eq})  = \left( \begin{array}{cc}
+0 & -\frac{a\mu}{b} \\
+\frac{b\lambda}{a} & 0 \end{array} \right)
+\label{equation:linearMatrix}
+\end{equation}
+y considerando que $ F(X_{eq}) = 0 $ por ser punto de equilibrio, se tiene
+\begin{equation}
+F(x,y) \approx  A \cdot (X-X_{eq}) = \left( \begin{array}{c}
+\frac{a \mu y}{b} + \frac{ \mu \lambda}{b}\\
+\frac{b \lambda x}{a} - \frac{ \mu \lambda}{a} \end{array} \right)  = X'
+\label{equation:linearization2}
+\end{equation}
+Entonces, la linealización obtenida es
+\begin{equation}
+\dot{x} \approx \left( \frac{a \mu}{b} \right) y + \frac{ \mu \lambda}{b} \ \ \ \ \dot{y} \approx \left( \frac{b \lambda}{a} \right) x - \frac{ \mu \lambda}{a}
+\label{equation:clearLinearization}
+\end{equation}
+
+Por otro lado, la matriz $A$ provee información útil acerca de la estabilidad del sistema. Si se propone $X = a e^{\phi t} $ como solución del sistema homogeneo $ X' = AX $, siendo $\phi$ los autovalores y $a$ los autovectores asociados a la matriz $A$, y considerando que $ \phi = \pm i \sqrt{\mu\lambda}$, el sistema oscila y el punto de equilibrio $X_{eq}$ es neutralmente estable.
+
+\vspace{0.5cm}
+%-------------------------------------------------------------------------
+\section{Resultados y conclusiones}
+\label{section:results}
+
+\subsection{Curvas obtenidas mediante simulaciones}
+
+El valor de la constante $\mu$ hallado mediante la ecuación \ref{equation:lsSystemSolution} es $1.87 \text{ yr}^{-1}$, y el de $K$ es $8.22 \text{ yr}^{-1}$. Dado que el valor de $\mu$ es mayor que $1 \text{ yr}^{-1}$, 
+en ausencia de presas la población de predadores desaparece en menos de un año.\\
+
+Mediante la obtención de los residuos de la aproximación por cuadrados mínimos, se evalúa qué tan certero es el valor de $\mu$ hallado. La figura \ref{figure:residuals} muestra dichos residuos. 
+Puede verse que para varios valores del tiempo, los residuos son cercanos a $0$. No obstante, particularmente para el valor $t = 8.8 \text{ yr}$, se tiene un residuo de $r = 2.68$. Dado que éste es muy distinto a los valores esperados, se evalúa si constituye un \textit{outlier} en la distribución de residuos encontrada. La media muestral es $m = 0$, y el desvío estándar es $\sigma = 0.67$. $r$ es mayor a $3 \sigma = 2.01$, por lo tanto es considerado un \textit{outlier}. Sin embargo, como es el único \textit{outlier} presente, puede considerarse que la aproximación es aceptable.\\
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale = 0.35]{img/residuals.png}
+	\caption{Residuos de la aproximación utilizando el método de cuadrados mínimos.}
+	\label{figure:residuals}
+\end{figure}
+
+A partir del valor de $\mu$ hallado, y utilizando los valores conocidos de las demás constantes, se utiliza el método de \textit{Runge-Kutta} de cuarto orden \citep{mathews} para resolver numéricamente las ecuaciones 
+\ref{equation:preys} y \ref{equation:predators}. El paso utilizado fue $h = 0.01 \text{ yr}$. La figura \ref{figure:simmulatedPopulations} muestra las poblaciones obtenidas de esta manera. Puede observarse que las curvas periódicas obtenidas 
+son similares a la de la figura \ref{figure:populations}, correspondiente al conjunto de datos; no obstante, en las curvas simuladas, no se alcanzan los picos de las curvas reales.\\
+
+\begin{figure}[htbp]
+	\centering
+	\subfigure[Gráfico de las poblaciones obtenidas mediante la simulación del sistema, resolviendo las ecuaciones \ref{equation:preys} y \ref{equation:predators} numéricamente.] {
+		\includegraphics[scale = 0.35]{img/simmulatedPopulations.png}
+		\label{figure:simmulatedPopulations}
+	}
+	\subfigure[Gráfico del espacio de fases del sistema, tanto para las poblaciones observadas como para las obtenidas mediante simulación.] {
+		\includegraphics[scale = 0.35]{img/phaseSpace.png}
+		\label{figure:phaseSpace}
+	}
+	\caption{Gráficos correspondientes a los resultados de las simulaciones.}
+\end{figure}
+
+Las poblaciones obtenidas mediante la simulación pueden utilizarse para construir el espacio de fases dado por la ecuación \ref{equation:phaseSpace}. La misma puede observarse en la figura \ref{figure:phaseSpace}. 
+La curva obtenida es cerrada, hecho que indica que los períodos de las poblaciones $x$ e $y$ son iguales.\\
+
+Es interesante tener la posibilidad de conocer cómo crecen y decrecen las poblaciones a medida que pasa el tiempo. En ausencia de las curvas de las figuras \ref{figure:populations} y 
+\ref{figure:simmulatedPopulations}, esto es imposible debido a que la figura \ref{figure:phaseSpace} es una trayectoria en la que no está involucrada la variable tiempo. Sin embargo, 
+puede calcularse el sentido de esta trayectoria y, así, tener información de la evolución dinámica de las poblaciones. Para determinarlo se obtiene, en base a las poblaciones simuladas, 
+el valor de $\dot{y}$ en el par $(x, y)$ en el cual $x$ es máximo. Este par corresponde a $x = 154.13$ e $y = 76.10$, y en este punto se tiene $\dot{y} = 267.97 \text{ yr}^{-1}$. Dado que este valor es positivo,
+la población de predadores crece, con lo que el sentido resulta ser antihorario.
+
+\subsection{Períodos de las poblaciones}
+
+Realizando simulaciones utilizando los parámetros dados y variando $\mu$, se obtiene que
+dichos períodos decrecen hasta aproximadamente $\mu = 10 \text{ yr}^{-1}$, en donde alcanzan un mínimo luego del cual comienzan a crecer. En este mínimo, los períodos son de $2.37 \text{ yr}$. 
+Similarmente, realizando simulaciones utilizando los parámetros dados y el $\mu$ estimado (utilizando la ecuación \ref{equation:lsSystemSolution}) y variando el valor del parámetro $\lambda$, se obtienen
+los valores de los períodos en función de $\lambda$. Nuevamente, los períodos son decrecientes hasta un mínimo, luego del cual comienzan a crecer. El mínimo se produce para $\lambda = 7 \text{ yr}^{-1}$
+aproximadamente, en donde los períodos son de $3.37 \text{ yr}$. En la figura \ref{figure:periods} se aprecia la forma en que varía el período para distintos valores de $\mu$, y para distintos valores de $\lambda$.
+
+\begin{figure}[h]
+	\centering
+	\subfigure[Períodos en función de $\mu$.]{
+		\includegraphics[scale = 0.35]{img/muPeriods.png}
+		\label{figure:muPeriod}
+	}
+	\subfigure[Períodos en función de $\lambda$.]{
+		\includegraphics[scale = 0.35]{img/lambdaPeriods.png}
+		\label{figure:lambdaPeriod}
+	}
+	\caption{Períodos de las poblaciones en función de dos parámetros de las ecuaciones diferenciales del modelo.}
+	\label{figure:periods}
+\end{figure}
+
+\subsection{Desfasaje en las curvas}
+
+Dada la periodicidad de las curvas que representan a las poblaciones, se realizan simulaciones con el motivo de obtener una dependencia 
+entre el desfasaje $\phi$ entre las poblaciones de presas y predadores, y el parámetro $a$. En otras palabras, se busca determinar $\phi$ tal que $\phi = \phi(a)$.\\
+
+Para valores de $a$ variando desde $0.02 \text{ yr}^{-1}$ hasta $1 \text{ yr}^{-1}$ (se considera innecesario hacer la evaluación para valores más cercanos a $0$, debido a que eso implicaría la inexistencia de encuentros 
+perjudiciales para las presas), se obtiene la gráfica de $\phi$ en función de $a$, detallada en la figura \ref{figure:phi}.
+En base a ésta, estimando geométricamente el comportamiento de la gráfica, se propone que el desfasaje obedezca una ecuación de la forma:
+\begin{equation}
+\phi(a) = \frac{1}{A (a + d)^2 + B (a + d) + C}
+\label{equation:fi_eq2}
+\end{equation}
+donde $A$, $B$, $C$ y $d$ son constantes reales.\\
+
+Puede realizarse una deducción empírica de tales constantes con el objeto de aproximar mediante una ecuación, de la mejor manera posible, el gráfico expuesto en la figura \ref{figure:phi}. Haciendo esto, se 
+tiene que para $A = 344.83 \text{ yr}$, $B = 27.59$, $C = 6.90 \text{ yr}^{-1}$ y $d = -0.35 \text{ yr}^{-1}$, el gráfico de $\phi(a)$ es el observado en la figura \ref{figure:phiSimApprox}.
+Se decide, entonces, aproximar $\phi$ mediante la ecuación \ref{equation:fi_eq2} con estos valores de las constantes reales.
+
+\begin{figure*}[h]
+	\centering
+	\subfigure[Gráfico del desfasaje en función del paŕametro $a$.]{
+		\includegraphics[scale = 0.45]{img/phi.png}
+		\label{figure:phi}
+	}
+	\subfigure[Curvas del desfasaje simulado y el aproximado fijando los valores de las constantes $A$, $B$, $C$ y $d$.]{
+		\includegraphics[scale = 0.45]{img/phiSimApprox.png}
+		\label{figure:phiSimApprox}
+	}
+	\caption{Curvas del desfasaje en función del parámetro $a$.}
+	\label{figure:phis}
+\end{figure*}
+
+\subsection{Poblaciones de equilibrio}
+
+El punto de equilibrio para el cual las poblaciones se mantienen constantes se obtiene reemplazando los datos $\lambda$, $\mu$, $a$ y $b$ por sus respectivos valores en la ecuación \ref{equation:eq1}, 
+lo cual resulta en $(x_{eq}, y_{eq}) = (53.52, 75)$. \\
+
+Habiendo calculado, de manera empírica, cuáles son las condiciones iniciales tales que ambas poblaciones perduren en el tiempo, se obtiene el gráfico de la figura \ref{figure:prob2b}. Del mismo puede deducirse que las poblaciones con gran cantidad de presas y pocos predadores, o con pocas presas y muchos predadores, tienen mayor probabilidad de sobrevivir que el caso en el que ambas poblaciones son grandes. Se confirma que, como lo indican las ecuaciones \ref{equation:preys} y \ref{equation:predators}, si hay muchas presas y muchos predadores, la velocidad de crecimiento de los predadores es muy alta y además las presas tienen una velocidad negativa de crecimiento considerable, lo que lleva a la extinción de las presas y por consiguiente a la extinción de los predadores.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale = 0.35]{img/prob2b.png}
+	\caption{Gráfico de $x_{0}$,$y_{0}$ / $x(t) \geq 1$ y $y(t) \geq 1, \forall t \geq 0$.}
+	\label{figure:prob2b}
+\end{figure}
+
+\subsection{Linealización}
+
+La ecuación \ref{equation:clearLinearization}, correspondiente a la linealización del sistema, puede reformularse de la siguiente manera:
+\begin{equation}
+\dot{x} \approx -\frac{a \mu}{b} \left( y - \frac{\lambda}{a}\right)
+\label{equation:preysLinear2}
+\end{equation}
+\begin{equation}
+\dot{y} \approx \frac{b \lambda}{a}\left(x - \frac{\mu}{b}\right)
+\label{equation:predatorsLinear2}
+\end{equation}
+
+Es interesante notar que, a puntos cercanos a $X_{eq} = (\frac{\mu}{b}, \frac{\lambda}{a})$ la variación de la población de las presas es directamente proporcional a la diferencia de población de los predadores con respecto a la población de equilibrio, y viceversa. 
+
+%-------------------------------------------------------------------------
+
+
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+%\bibliographystyle{authordate}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+
+
+\begin{thebibliography}{1}
+
+\bibitem[Berryman(1992)]{berryman}
+	Berryman, Alan A.
+	``The origins and evolution of predator-prey history'',
+	Ecological Society of America,
+	1992
+
+\vspace{0.2cm}
+
+\bibitem[Mathews y Fink(1992)]{mathews}
+	Mathews, John H.,
+	Fink, Kurtis D.,
+	``Numerical Methods Using MATLAB'',
+	Prentice Hall,
+	1999
+	
+\end{thebibliography}
+
+\end{document}
+
+
