@@ -14,10 +14,7 @@ for k=1:n
 	u(1) = u(1)+sign(x(1))*norm(x);
 	H = eye(m-(k-1)) - (2/norm(u)^2).*(u*u');
 
-	Hk = eye(m);
-	Hk(k:m,k:m) = H;
-
-	R = Hk*R;
-	Q = Hk*Q;
+	R(k:m,:) = H*R(k:m,:);
+	Q(k:m,:) = H*Q(k:m,:);
 end
 Q = Q';
