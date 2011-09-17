@@ -262,7 +262,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Convivencia y evolución en un sistema presa-predador}
+\title{Análisis de la velocidad del viento en Irlanda}
 %
 %
 % author names and IEEE memberships
@@ -274,11 +274,7 @@
 % was not built to handle multiple paragraphs
 %
 
-\author{\textbf{Primer autor:}	Alejandro Magnorsky\\
-		\textbf{Co-autores:}	Matías Colotto,
-								Andrés Mata Suárez,
-								Mariano Merchante,
-								Ezequiel Scaruli \\[5px]
+\author{\textbf{Autores:} Alejandro Magnorsky, Andrés Mata Suárez, Mariano Merchante \\[5px]
         Instituto Tecnológico de Buenos Aires}
         
 % note the % following the last \IEEEmembership and also \thanks - 
@@ -411,181 +407,52 @@ La sección \ref{section:results} contiene los resultados obtenidos luego de rea
 \section{Desarrollo}
 \label{section:development}
 
-El modelo de \textit{Lotka-Volterra-Ancona} propone las siguientes ecuaciones diferenciales \citep{berryman}:
+\par
+Para cada una de las estaciones meteorológicas, se desea ajustar los datos a una función de la forma:
+
 \begin{equation}
-\dot{x} = \lambda x - a x y
-\label{equation:preys}
+v(t) = A_{0} + A_{1}cos(2\pi f_{1}t) + B_{1}sen(2\pi f_{1}t)
+\label{equation:model}
 \end{equation}
+
+donde $t$ es el tiempo en días, $v(t)$ es la velocidad del viento en el instante $t$ y $f_{1} = \frac{1}{365,25} dia^{-1}$. \\
+$v(t)$ es lineal en función de $A_{0}$, $A_{1}$ y $B_{1}$ y se puede expresar como $v(t) = A_{0}f_{1}(t) + A_{1}f_{2}(t) + B_{1}f_{3}(t)$ donde $f_{1}(t) = 1$, $f_{2}(t) = cos(2\pi f_{1}t)$ y $f_{3}(t) = sen(2\pi f_{1}t)$. \\
+Para resolver el problema de ajuste se utiliza el método de cuadrados mínimos. El objetivo entonces es encontrar $A_{0}$, $A_{1}$ y $B_{1}$ tal que 
+$\displaystyle\sum_{\substack{k=1}}^{n} (v(t_{k})- v_{k})^{2} $ sea mínimo. \\
+Si definimos la matriz A y los vectores $\vec{x}$ y $\vec{b}$ como:
 \begin{equation}
-\dot{y} = b x y - \mu y
-\label{equation:predators}
-\end{equation}
-$x(t)$ representa la población de presas, e $y(t)$ la de predadores. Las constantes $\lambda$, $\mu$, $a$ y $b$ son positivas y su significado se explica a continuación. 
-$\lambda$ representa la tasa de crecimiento poblacional de las presas en ausencia de predadores; en cambio, $\mu$ simboliza la tasa de mortalidad de la población de predadores 
-en ausencia de presas. Por otro lado, $a$ representa un factor del medio ambiente que afecta las probabilidades de encuentro entre presas y predadores. $b$ simboliza la tasa de éxito 
-ante un encuentro, es decir, cómo crece la población de predadores cuando uno de ellos se topa con una presa. Como puede verse en las ecuaciones \ref{equation:preys} y \ref{equation:predators}, 
-los encuentros son beneficiosos para los predadores y perjudiciales para las presas.\\
-
-Las ecuaciones \ref{equation:preys} y \ref{equation:predators} muestran que el modelo del sistema no es lineal. Esto se debe a que la velocidad con que disminuyen las presas es 
-proporcional al producto de las poblaciones de presas y predadores; lo mismo sucede para la velocidad con que aumentan los predadores. El hecho de que el modelo esté representado 
-por ecuaciones diferenciales da la pauta de que es un modelo dinámico. Además, es determinista ya que no intervienen variables aleatorias. Es un modelo invariante en el tiempo
-porque en las ecuaciones \ref{equation:preys} y \ref{equation:predators} las derivadas $\dot{x}$ e $\dot{y}$ no dependen explícitamente del tiempo. Es un modelo
-continuo ya que $t$ es una variable continua.\\
-
-Es importante notar que el modelo no contempla ningún tipo de entrada al sistema; esto da a entender que el modelo considera que el sistema está aislado. Como además es invariante
-en el tiempo, el modelo representa un sistema autónomo y, por lo tanto, sólo puede cambiar mediante sus condiciones iniciales. Si bien esto no es lo que ocurre en la realidad,
-es una consecuencia de las hipótesis tomadas por los autores del modelo para simplificarlo.\\
-
-A partir de \ref{equation:preys} y \ref{equation:predators}, se puede lograr la expresión
-\begin{equation}
-\frac{\dot{y}}{\dot{x}} = \frac{b x y - \mu y}{\lambda x - a x y}
-\end{equation}
-Separando, integrando y reordenando los términos se obtiene
-\begin{equation}
-\lambda \ln y - a y - b x + \mu \ln x = K
-\label{equation:phaseSpace}
-\end{equation}
-donde $K$ es una constante que depende de las condiciones iniciales del modelo ($x(t_0)$ e $y(t_0)$).
-Esta ecuación representa la curva correspondiente a la trayectoria del modelo en el \emph{espacio de fases} $(x, y)$ del sistema.
-
-\subsection{Desconocimiento del valor de un parámetro}
-
-Es posible que, en un caso experimental, se tenga un conjunto de datos $(t_k, x_k, y_k)$, donde $x_k = x(t_k)$ e $y_k = y(t_k)$ (con $k \in \{1, 2, \dots, n\}$) 
-y se quiera, a partir de éstos, conseguir la expresión del espacio de fases del sistema correspondiente a la ecuación \ref{equation:phaseSpace}. Para ello, es 
-necesario conocer los valores de las constantes $a$, $b$, $\lambda$ y $\mu$. Sin embargo, es posible que alguno de estos valores no sea conocido. Se analiza 
-aquí el caso en que $a = 0.02 \text{ yr}^{-1}$, $b = 0.0035 \text{ yr}^{-1}$, $\lambda = 1.5 \text{ yr}^{-1}$ y no se conoce el valor de $\mu$. Los datos experimentales para los cuales se hace este análisis corresponden a las poblaciones observadas en la figura \ref{figure:populations}.\\
-
-\begin{figure*}[htbp]
-	\centering
-	\includegraphics[scale = 0.5]{img/populations.png}
-	\caption{Gráfico de las poblaciones en función del tiempo para el conjunto de datos utilizado.}
-	\label{figure:populations}
-\end{figure*}
-
-Una manera de calcular el valor de $\mu$ es ajustando los puntos del conjunto de datos a la trayectoria en el espacio de fases mediante cuadrados mínimos. Para ello, 
-se reordenan los términos de la ecuación \ref{equation:phaseSpace}:
-\begin{equation}
-K - \mu \ln x = \lambda \ln y - a y - b x
-\end{equation}
-Al utilizar los pares $(x_k, y_k)$ del conjunto de datos, puede escribirse esta ecuación para cada uno de los $k$ valores, obteniendo un sistema de ecuaciones en forma matricial:
-\begin{equation}
-\left(
-\begin{array}{c c}
-1 & -\ln x_1 \\
-1 & -\ln x_2 \\
+A = \left(\begin{array}{ccc}
+f_{1}(t_{1}) & f_{2}(t_{1}) & f_{3}(t_{1}) \\
+f_{1}(t_{2}) & f_{2}(t_{2}) & f_{3}(t_{2}) \\
+\vdots & \vdots & \vdots \\
+f_{1}(t_{n}) & f_{2}(t_{n}) & f_{3}(t_{n}) \\
+\end{array} \right) \qquad
+\vec{x} = \left(\begin{array}{c}
+A_{0} \\
+A_{1} \\
+B_{1} \\
+\end{array} \right) \qquad
+\vec{b} = \left(\begin{array}{c}
+v_{1} \\
+v_{2} \\
 \vdots \\
-1 & - \ln x_n \\
-\end{array}
-\right)
-\left(
-\begin{array}{c}
-K \\
-\mu
-\end{array}
-\right)
-=
-\left(
-\begin{array}{c}
-\lambda \ln y_1 - a y_1 - b x_1 \\
-\lambda \ln y_2 - a y_2 - b x_2 \\
-\vdots \\
-\lambda \ln y_n - a y_n - b x_n \\
-\end{array}
-\right)
-\label{equation:lsSystemSolution}
+v_{n} \\
+\end{array} \right)
 \end{equation}
-Este modelo tiene la forma $A \vec{x} = \vec{b}$ correspondiente a un problema de cuadrados mínimos. A partir de la resolución del mismo, 
-mediante $\vec{x} = (A^\text{T} A)^{-1} A^\text{T} \vec{b}$,
-se puede obtener el valor de las constantes $\mu$ y $K$ y, así, disponer de todos los valores necesarios para construir el espacio de fases del sistema.
-
-\subsection{Poblaciones de equilibrio}
-
-Es interesante analizar el caso en que las poblaciones de presas y predadores no varían con el tiempo. Esto se traduce a 
-que la velocidad con que cambia la población con respecto al tiempo es igual a 0, es decir, $\dot{x} = 0$ y $\dot{y} = 0$.\\
-
-Pidiendo $\dot{x} = 0$ y $\dot{y} = 0$ en las ecuaciones \ref{equation:preys} y \ref{equation:predators} respectivamente, resulta: 
+entonces el objetivo puede expresarse como encontrar $\vec{x}$ tal que $||A\vec{x} - {b}||^{2}$ sea mínimo. \\
 \begin{equation}
-0 = x_{eq}(\lambda - ay_{eq})
-\label{equation:y_eq1}
+A = QR = (Q_{1} \, Q_{2}) \left( \begin{array}{c}
+R_{1} \\
+0 \\
+\end{array} \right)
 \end{equation}
-\begin{equation}
-0 = y_{eq}(bx_{eq} - \mu)
-\label{equation:x_eq1}
-\end{equation}
+donde A tiene dimensiones $n$x$3$, $Q_{1}$ de $n$x$n$, $Q_{2}$ de $n$x$(3-n)$ y $R_{1}$ de $n$x$n$.
+La solución se obtiene de:
+\begin{eqnarray}
+A\vec{x} & = & \vec{b} \\
+R_{1}\vec{x} & = & Q_{1}^{T}\vec{b} 
+\end{eqnarray}
 
-El punto de equilibrio encontrado mediante las ecuaciones \ref{equation:y_eq1} y 
-\ref{equation:x_eq1} es:
-\begin{equation}
-(x_{eq}, y_{eq}) = \left(\frac{\mu}{b}, \frac{\lambda}{a}\right)
-\label{equation:eq1}
-\end{equation}
-
-Se trata de un punto de equilibrio neutralmente estable ya que las órbitas del espacio de fases $(x, y)$ son trayectorias cerradas, por lo que los valores de
-$x$ e $y$ están controlados. Es decir, $\lim\limits_{t\rightarrow\infty} x(t) \neq \infty$,  $\lim\limits_{t\rightarrow\infty} x(t) \neq 0$, $\lim\limits_{t\rightarrow\infty} y(t) \neq \infty$ y $\lim\limits_{t\rightarrow\infty} y(t) \neq 0$.\\
-
-Puede darse una situación en la que, para ciertas poblaciones iniciales, alguna de las poblaciones muere. Esto representa un 
-problema en el ecosistema dado que, si los predadores mueren, la población de presas aumenta indefinidamente con el tiempo. 
-Por otro lado, si las presas mueren, los predadores también mueren luego de un tiempo porque no tienen fuente de alimentación. 
-Por lo tanto, hay que analizar para qué valores de $x_{0} = x(t_{0})$ e $y_{0} = y(t_{0})$ se cumple que $x(t) \geq 1$ e $y(t) \geq 1 \\ \forall t \geq t_{0}$, dados $\lambda$, $\mu$, $a$ y $b$.
-Este problema se analiza en detalle mediante la realización de simulaciones.
-
-\subsection{Linealización del modelo}
-Una posible simplificación del modelo propuesto por las ecuaciones \ref{equation:preys} y \ref{equation:predators} consiste en una linealización. Para ello, es necesario considerar que las poblaciones se mantienen cercanas a las de equilibrio. Dicha linealización requiere herramientas del cálculo vectorial. Si se define el vector:
-
-\begin{equation}
-X = \left(\begin{array}{c}
-x \\
-y \end{array} \right)
-\label{equation:vectorDefinition}
-\end{equation}
-
-con $x$ e $y$ las poblaciones de presas y predadores respectivamente, el modelo puede ser representado como una función $ F:\mathds{R}^{2} \rightarrow \mathds{R}^{2}$ tal que:
-\begin{equation}
-X' = F(X) = \left(\begin{array}{c}
-\lambda x - axy \\
-bxy - \mu y \end{array} \right)
-\label{equation:systemFunctionDefinition}
-\end{equation}
-
-Una manera de aproximar la función $F$ en un punto $P = (x_0,y_0)$ de $F$ es mediante la matriz Jacobiana de la misma. Puede probarse que la siguiente relación es válida:
-
-\begin{equation}
-F(X) \approx F(P) + J_{F}(P)(X-P)
-\label{equation:functionLinearization}
-\end{equation}
-
-donde $J_{F}(P)$ es la matriz Jacobiana de la función $F$ evaluada en el punto $P$. Dicha matriz está dada por:
-
-\begin{equation}
-J_{F}(x, y) = \left(\begin{array}{cc}
-\frac{\partial F_{x}}{\partial x} & \frac{\partial F_{x}}{\partial y} \\
-\frac{\partial F_{y}}{\partial x} & \frac{\partial F_{y}}{\partial y}\end{array} \right) = \left(\begin{array}{cc}
-\lambda - ay & -ax \\
-by & bx-\mu \end{array} \right)
-\label{equation:genericJacobian}
-\end{equation}
-
-Con esta información se puede aproximar $F$ en puntos cercanos a  $X_{eq} = (\frac{\mu}{b}, \frac{\lambda}{a})$ según la ecuación \ref{equation:functionLinearization}. Si se define
-\begin{equation}
-A = J_{F}(X_{eq})  = \left( \begin{array}{cc}
-0 & -\frac{a\mu}{b} \\
-\frac{b\lambda}{a} & 0 \end{array} \right)
-\label{equation:linearMatrix}
-\end{equation}
-y considerando que $ F(X_{eq}) = 0 $ por ser punto de equilibrio, se tiene
-\begin{equation}
-F(x,y) \approx  A \cdot (X-X_{eq}) = \left( \begin{array}{c}
-\frac{a \mu y}{b} + \frac{ \mu \lambda}{b}\\
-\frac{b \lambda x}{a} - \frac{ \mu \lambda}{a} \end{array} \right)  = X'
-\label{equation:linearization2}
-\end{equation}
-Entonces, la linealización obtenida es
-\begin{equation}
-\dot{x} \approx \left( \frac{a \mu}{b} \right) y + \frac{ \mu \lambda}{b} \ \ \ \ \dot{y} \approx \left( \frac{b \lambda}{a} \right) x - \frac{ \mu \lambda}{a}
-\label{equation:clearLinearization}
-\end{equation}
-
-Por otro lado, la matriz $A$ provee información útil acerca de la estabilidad del sistema. Si se propone $X = a e^{\phi t} $ como solución del sistema homogeneo $ X' = AX $, siendo $\phi$ los autovalores y $a$ los autovectores asociados a la matriz $A$, y considerando que $ \phi = \pm i \sqrt{\mu\lambda}$, el sistema oscila y el punto de equilibrio $X_{eq}$ es neutralmente estable.
 
 \vspace{0.5cm}
 %-------------------------------------------------------------------------
@@ -600,29 +467,12 @@ en ausencia de presas la población de predadores desaparece en menos de un año
 Mediante la obtención de los residuos de la aproximación por cuadrados mínimos, se evalúa qué tan certero es el valor de $\mu$ hallado. La figura \ref{figure:residuals} muestra dichos residuos. 
 Puede verse que para varios valores del tiempo, los residuos son cercanos a $0$. No obstante, particularmente para el valor $t = 8.8 \text{ yr}$, se tiene un residuo de $r = 2.68$. Dado que éste es muy distinto a los valores esperados, se evalúa si constituye un \textit{outlier} en la distribución de residuos encontrada. La media muestral es $m = 0$, y el desvío estándar es $\sigma = 0.67$. $r$ es mayor a $3 \sigma = 2.01$, por lo tanto es considerado un \textit{outlier}. Sin embargo, como es el único \textit{outlier} presente, puede considerarse que la aproximación es aceptable.\\
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale = 0.35]{img/residuals.png}
-	\caption{Residuos de la aproximación utilizando el método de cuadrados mínimos.}
-	\label{figure:residuals}
-\end{figure}
+
 
 A partir del valor de $\mu$ hallado, y utilizando los valores conocidos de las demás constantes, se utiliza el método de \textit{Runge-Kutta} de cuarto orden \citep{mathews} para resolver numéricamente las ecuaciones 
 \ref{equation:preys} y \ref{equation:predators}. El paso utilizado fue $h = 0.01 \text{ yr}$. La figura \ref{figure:simmulatedPopulations} muestra las poblaciones obtenidas de esta manera. Puede observarse que las curvas periódicas obtenidas 
 son similares a la de la figura \ref{figure:populations}, correspondiente al conjunto de datos; no obstante, en las curvas simuladas, no se alcanzan los picos de las curvas reales.\\
 
-\begin{figure}[htbp]
-	\centering
-	\subfigure[Gráfico de las poblaciones obtenidas mediante la simulación del sistema, resolviendo las ecuaciones \ref{equation:preys} y \ref{equation:predators} numéricamente.] {
-		\includegraphics[scale = 0.35]{img/simmulatedPopulations.png}
-		\label{figure:simmulatedPopulations}
-	}
-	\subfigure[Gráfico del espacio de fases del sistema, tanto para las poblaciones observadas como para las obtenidas mediante simulación.] {
-		\includegraphics[scale = 0.35]{img/phaseSpace.png}
-		\label{figure:phaseSpace}
-	}
-	\caption{Gráficos correspondientes a los resultados de las simulaciones.}
-\end{figure}
 
 Las poblaciones obtenidas mediante la simulación pueden utilizarse para construir el espacio de fases dado por la ecuación \ref{equation:phaseSpace}. La misma puede observarse en la figura \ref{figure:phaseSpace}. 
 La curva obtenida es cerrada, hecho que indica que los períodos de las poblaciones $x$ e $y$ son iguales.\\
@@ -641,19 +491,6 @@ Similarmente, realizando simulaciones utilizando los parámetros dados y el $\mu
 los valores de los períodos en función de $\lambda$. Nuevamente, los períodos son decrecientes hasta un mínimo, luego del cual comienzan a crecer. El mínimo se produce para $\lambda = 7 \text{ yr}^{-1}$
 aproximadamente, en donde los períodos son de $3.37 \text{ yr}$. En la figura \ref{figure:periods} se aprecia la forma en que varía el período para distintos valores de $\mu$, y para distintos valores de $\lambda$.
 
-\begin{figure}[h]
-	\centering
-	\subfigure[Períodos en función de $\mu$.]{
-		\includegraphics[scale = 0.35]{img/muPeriods.png}
-		\label{figure:muPeriod}
-	}
-	\subfigure[Períodos en función de $\lambda$.]{
-		\includegraphics[scale = 0.35]{img/lambdaPeriods.png}
-		\label{figure:lambdaPeriod}
-	}
-	\caption{Períodos de las poblaciones en función de dos parámetros de las ecuaciones diferenciales del modelo.}
-	\label{figure:periods}
-\end{figure}
 
 \subsection{Desfasaje en las curvas}
 
@@ -673,19 +510,7 @@ Puede realizarse una deducción empírica de tales constantes con el objeto de a
 tiene que para $A = 344.83 \text{ yr}$, $B = 27.59$, $C = 6.90 \text{ yr}^{-1}$ y $d = -0.35 \text{ yr}^{-1}$, el gráfico de $\phi(a)$ es el observado en la figura \ref{figure:phiSimApprox}.
 Se decide, entonces, aproximar $\phi$ mediante la ecuación \ref{equation:fi_eq2} con estos valores de las constantes reales.
 
-\begin{figure*}[h]
-	\centering
-	\subfigure[Gráfico del desfasaje en función del paŕametro $a$.]{
-		\includegraphics[scale = 0.45]{img/phi.png}
-		\label{figure:phi}
-	}
-	\subfigure[Curvas del desfasaje simulado y el aproximado fijando los valores de las constantes $A$, $B$, $C$ y $d$.]{
-		\includegraphics[scale = 0.45]{img/phiSimApprox.png}
-		\label{figure:phiSimApprox}
-	}
-	\caption{Curvas del desfasaje en función del parámetro $a$.}
-	\label{figure:phis}
-\end{figure*}
+
 
 \subsection{Poblaciones de equilibrio}
 
@@ -694,12 +519,6 @@ lo cual resulta en $(x_{eq}, y_{eq}) = (53.52, 75)$. \\
 
 Habiendo calculado, de manera empírica, cuáles son las condiciones iniciales tales que ambas poblaciones perduren en el tiempo, se obtiene el gráfico de la figura \ref{figure:prob2b}. Del mismo puede deducirse que las poblaciones con gran cantidad de presas y pocos predadores, o con pocas presas y muchos predadores, tienen mayor probabilidad de sobrevivir que el caso en el que ambas poblaciones son grandes. Se confirma que, como lo indican las ecuaciones \ref{equation:preys} y \ref{equation:predators}, si hay muchas presas y muchos predadores, la velocidad de crecimiento de los predadores es muy alta y además las presas tienen una velocidad negativa de crecimiento considerable, lo que lleva a la extinción de las presas y por consiguiente a la extinción de los predadores.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale = 0.35]{img/prob2b.png}
-	\caption{Gráfico de $x_{0}$,$y_{0}$ / $x(t) \geq 1$ y $y(t) \geq 1, \forall t \geq 0$.}
-	\label{figure:prob2b}
-\end{figure}
 
 \subsection{Linealización}
 
