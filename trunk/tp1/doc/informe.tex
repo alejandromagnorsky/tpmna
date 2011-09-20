@@ -8,6 +8,7 @@
 \usepackage{dsfont}
 \usepackage{subfigure}
 \usepackage{natbib}
+\usepackage{moreverb}
 
 \ifCLASSINFOpdf
 \else
@@ -409,16 +410,16 @@ La sección \ref{section:results} contiene los resultados obtenidos luego de rea
 
 \par
 Para cada una de las estaciones meteorológicas, se desea ajustar los datos a una función de la forma:
-
 \begin{equation}
 v(t) = A_{0} + A_{1}cos(2\pi f_{1}t) + B_{1}sen(2\pi f_{1}t)
 \label{equation:model}
 \end{equation}
-
 donde $t$ es el tiempo en días, $v(t)$ es la velocidad del viento en el instante $t$ y $f_{1} = \frac{1}{365,25} dia^{-1}$. \\
-$v(t)$ es lineal en función de $A_{0}$, $A_{1}$ y $B_{1}$ y se puede expresar como $v(t) = A_{0}f_{1}(t) + A_{1}f_{2}(t) + B_{1}f_{3}(t)$ donde $f_{1}(t) = 1$, $f_{2}(t) = cos(2\pi f_{1}t)$ y $f_{3}(t) = sen(2\pi f_{1}t)$. \\
+$v(t)$ es lineal en función de $A_{0}$, $A_{1}$ y $B_{1}$ y se puede expresar como $v(t) = A_{0}f_{1}(t) + A_{1}f_{2}(t) + B_{1}f_{3}(t)$ donde $f_{1}(t) = 1$, $f_{2}(t) = cos(2\pi f_{1}t)$ y $f_{3}(t) = sen(2\pi f_{1}t)$.
+\par
 Para resolver el problema de ajuste se utiliza el método de cuadrados mínimos. El objetivo entonces es encontrar $A_{0}$, $A_{1}$ y $B_{1}$ tal que 
-$\displaystyle\sum_{\substack{k=1}}^{n} (v(t_{k})- v_{k})^{2} $ sea mínimo. \\
+$\displaystyle\sum_{\substack{k=1}}^{n} (v(t_{k})- v_{k})^{2} $ sea mínimo.
+\par
 Si definimos la matriz A y los vectores $\vec{x}$ y $\vec{b}$ como:
 \begin{equation}
 A = \left(\begin{array}{ccc}
@@ -439,7 +440,16 @@ v_{2} \\
 v_{n} \\
 \end{array} \right)
 \end{equation}
-entonces el objetivo puede expresarse como encontrar $\vec{x}$ tal que $||A\vec{x} - {b}||^{2}$ sea mínimo. \\
+entonces, el objetivo puede expresarse como encontrar $\vec{x}$ tal que $||A\vec{x} - {b}||^{2}$ sea mínimo.
+\par
+La solución clásica al problema de cuadrados mínimos es hacer $\vec{x} = (A^{T}A)^{-1}A^{T}\vec{b}$. Sin embargo, calcular la inversa de una matriz es de $O(n^{3})$. Es por eso que se optó por resolver el problema utilizando la factorización QR obtenida por:
+\begin{itemize}
+\item Householder
+\item Givens
+\item Gram-Schmidt
+\end{itemize}
+\par
+La forma de resolver el problema de cuadrados mínimos usando QR consiste en:
 \begin{equation}
 A = QR = (Q_{1} \, Q_{2}) \left( \begin{array}{c}
 R_{1} \\
@@ -447,11 +457,8 @@ R_{1} \\
 \end{array} \right)
 \end{equation}
 donde A tiene dimensiones $n$x$3$, $Q_{1}$ de $n$x$3$, $Q_{2}$ de $n$x$(n-3)$ y $R_{1}$ de $3$x$3$.
-La solución se obtiene de:
-\begin{eqnarray}
-A\vec{x} & = & \vec{b} \\
-R_{1}\vec{x} & = & Q_{1}^{T}\vec{b} 
-\end{eqnarray}
+\par
+La solución se obtiene resolviendo $R_{1}\vec{x} = Q_{1}^{T}\vec{b} $ por sustitución hacia atrás ya que $R_{1}$ es triangular superior.
 
 
 \vspace{0.5cm}
@@ -536,6 +543,30 @@ Es interesante notar que, a puntos cercanos a $X_{eq} = (\frac{\mu}{b}, \frac{\l
 
 %-------------------------------------------------------------------------
 
+\begin{thebibliography}{1}
+
+\bibitem[Mathews y Fink(1992)]{mathews}
+	Mathews, John H.,
+	Fink, Kurtis D.,
+	``Numerical Methods Using MATLAB'',
+	Prentice Hall,
+	1999
+	
+\end{thebibliography}
+
+
+%-------------------------------------------------------------------------
+
+\clearpage
+\section{Código}
+\subsection{Householder}
+\verbatimtabinput{../src/householder.m}
+\clearpage
+\subsection{Givens}
+\verbatimtabinput{../src/givens.m}
+\vspace{0.5cm}
+\verbatimtabinput{../src/givensrot.m}
+\clearpage
 
 
 
@@ -563,25 +594,6 @@ Es interesante notar que, a puntos cercanos a $X_{eq} = (\frac{\mu}{b}, \frac{\l
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 
-
-\begin{thebibliography}{1}
-
-\bibitem[Berryman(1992)]{berryman}
-	Berryman, Alan A.
-	``The origins and evolution of predator-prey history'',
-	Ecological Society of America,
-	1992
-
-\vspace{0.2cm}
-
-\bibitem[Mathews y Fink(1992)]{mathews}
-	Mathews, John H.,
-	Fink, Kurtis D.,
-	``Numerical Methods Using MATLAB'',
-	Prentice Hall,
-	1999
-	
-\end{thebibliography}
 
 \end{document}
 
