@@ -3,11 +3,7 @@ function [Q,R] = householder(A)
 	Q = eye(m);
 	R = A;
 
-	for k=1:n
-		if(k >= m)
-			Q = Q';
-			return;
-		endif
+	for k=1:min(n,m)
 		x = R(k:m,k);
 		u = x;
 		u(1) = u(1)+sign(x(1))*norm(x);
