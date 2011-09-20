@@ -9,6 +9,7 @@
 \usepackage{subfigure}
 \usepackage{natbib}
 \usepackage{moreverb}
+\usepackage{url}
 
 \ifCLASSINFOpdf
 \else
@@ -344,14 +345,7 @@
 
 \begin{abstract}
 \boldmath
-Un ecosistema acuático en el que existen poblaciones de \textit{Tiburones Pintarrojo} y \textit{Salmones de Mar} puede estudiarse para analizar la convivencia entre
-presas y predadores. Existe una forma de representar dicho ecosistema, y es mediante un modelo basado
-en ecuaciones diferenciales. El siguiente artículo está orientado a analizar
-dicho modelo. En base a datos de observaciones empíricas se realiza una simulación numérica 
-para obtener funciones que representen las poblaciones de presas y predadores. Luego
-se realiza un análisis de cómo el período de dichas funciones varía en función de los parámetros constantes de las ecuaciones diferenciales.
-Se obtienen las poblaciones de equilibrio del sistema. Además, a fin de simplificar
-el modelo, se propone una linealización del mismo.
+
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -362,7 +356,7 @@ el modelo, se propone una linealización del mismo.
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Convivencia presa-predador; \textit{Lotka-Volterra}; ecosistema acuático.
+Velocidad del viento; Cuadrados mínimos; Irlanda.
 \end{IEEEkeywords}
 
 
@@ -379,37 +373,58 @@ Convivencia presa-predador; \textit{Lotka-Volterra}; ecosistema acuático.
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
-\vspace{0.5cm}
+\vspace{1cm}
 
 \section{Introducción}
-
-La manera en que se relacionan las presas y los predadores en un ecosistema natural
-es interesante y ocupa un papel preponderante en la teoría ecologista. Su
-análisis puede resultar útil en ciertas aplicaciones, tales como la predicción
-de la posible extinción de una especie, así como la procreación intencional de
-ciertos predadores para evitar el crecimiento descontrolado de una plaga. Es interesante saber entonces, dado un ecosistema, bajo qué condiciones
-se establece una convivencia entre presas y predadores, o si alguna de las
-dos poblaciones termina desapareciendo.\\
-
-Existen varios modelos para representar la dinámica de un sistema presa-predador.
-En este artículo se adopta el modelo dinámico de \textit{Lotka-Volterra-Ancona}\footnote{Alfred James Lotka (1880-1949) fue un matemático estadounidense, especializado en estadística. 
-Vito Volterra (1860-1940) fue un matemático y físico italiano. Umberto d’Ancona, cuñado de Vito Volterra, era un pescador italiano.},
-que constituye un gran avance en el estudio de estas poblaciones ocurrido entre los años
-1925 y 1928.\\
-
-En la sección \ref{section:development}, se presentan las ecuaciones diferenciales
-que constituyen el modelo mencionado en el párrafo anterior y se lo clasifica. Se realiza una simulación numérica para, en base al modelo y a observaciones empíricas, obtener curvas que 
-representen a las poblaciones de presas y predadores. Se grafica la trayectoria del \textit{espacio de fases}. Se analiza el comportamiento de las curvas en base a los parámetros constantes 
-de las ecuaciones diferenciales y se encuentran las poblaciones de equilibrio. Finalmente, se realiza una linealización del sistema.\\
-
-La sección \ref{section:results} contiene los resultados obtenidos luego de realizar los distintos análisis de la sección \ref{section:development}. Además, se realizan observaciones sobre los mismos.\\
-
+\par
+La energía eólica es aquella obtenida a partir del viento. Se trata de energía cinética generada por medio de las corrientes de aire, la cual es transformada en otras formas útiles de energía para las actividades humanas. Las ventajas de la energía eólica es que es un recurso abundante, renovable y limpio. Sin embargo, el principal inconveniente es su intermitencia. 
+\par
+Para poder aprovechar la energía eólica es importante conocer la velocidad del viento. Esto incluye la velocidad máxima y mínima. Para poder utilizar la energía del viento, es necesario que este alcance una velocidad mínima que depende del aerogenerador que se vaya a utilizar pero que suele empezar entre los 3 m/s y los 4 m/s, y que no supere los 25 m/s. En los aerogeneradores la energía eólica mueve una hélice y mediante un sistema mecánico se hace girar el rotor de un generador que produce energía eléctrica. Para que su instalación resulte rentable, suelen agruparse en concentraciones denominadas parques eólicos.
+\par
+El gobierno irlandés consideró la posibilidad de utilizar la energía eólica para satisfacer una porción significativa de las necesidades enérgicas de Irlanda. Para determinar la conveniencia y los lugares con mayor potencial se realizó un relevamiento de las velocidades del viento medidas por 12 estaciones meteorológicas
+distribuidas a lo largo del territorio. Cabe mencionar que existen distintas escalas de implementación de energía eólica: desde la calefacción de edificios hasta el abastecimiento de energía eléctrica de un cierto porcentaje de la población de una ciudad. 
+\par
+Antes de instalar y comenzar a operar un aerogenerador en un potencial lugar para producir otras fuentes de energía usando la eólica se suele utilizar registros de las velocidades del viento en dicha zona a lo largo de varios meses. La energía que puede producir un aerogenerador es una función no lineal de la velocidad del viento. Por lo tanto, el cálculo de la velocidad media del viento en la zona es insuficiente. Se hace, entonces, necesaria la estimación de la distribución completa de las velocidades \citep{haslett}.
+\par
+En la sección \ref{section:development} se calcula el promedio de las velocidades de los vientos para cada estacion meteorológica y se ajustan los datos de las velocidades a una función usando cuadrados mínimos.
+\vspace{1cm}
 %-------------------------------------------------------------------------
 \section{Desarrollo}
 \label{section:development}
 
+\subsection{Velocidades medias}
 \par
-Para cada una de las estaciones meteorológicas, se desea ajustar los datos a una función de la forma:
+Con el fin de conocer mejor cómo son los datos obtenidos de la medición de la velocidad del viento en las distintas estaciones, se calcula el promedio de todos los datos en cada una de ellas. El resultado de ello se encuentra en la tabla \ref{table:speed}.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l|r}
+			Estación meteorológica & Velocidad media (m/s) \\
+			\hline
+			Roche's Pt. & 6.3599 \\ 
+			Valentia & 5.4765 \\
+			Rosslare & 5.9980 \\
+			Kilkenny & 3.2439 \\
+			Shannon & 5.3790 \\
+			Birr & 3.6483 \\
+			Dublin & 5.0395 \\
+			Claremorris & 4.3695 \\
+			Mullingar & 4.3702 \\
+			Clones & 4.4790 \\
+			Belmullet & 6.7494 \\
+			Malin head & 8.0244 \\
+		\end{tabular}
+		\caption{Velocidades medias en cada estación meteorológica.}
+		\label{table:speed}
+	\end{center}
+\end{table}
+
+\vspace{0.5cm}
+
+
+\subsection{Aproximación de los datos a una función}
+\par
+Para cada una de las estaciones meteorológicas, se desea ajustar las velocidades medidas a una función de la forma:
 \begin{equation}
 v(t) = A_{0} + A_{1}cos(2\pi f_{1}t) + B_{1}sen(2\pi f_{1}t)
 \label{equation:model}
@@ -417,7 +432,7 @@ v(t) = A_{0} + A_{1}cos(2\pi f_{1}t) + B_{1}sen(2\pi f_{1}t)
 donde $t$ es el tiempo en días, $v(t)$ es la velocidad del viento en el instante $t$ y $f_{1} = \frac{1}{365,25} dia^{-1}$. \\
 $v(t)$ es lineal en función de $A_{0}$, $A_{1}$ y $B_{1}$ y se puede expresar como $v(t) = A_{0}f_{1}(t) + A_{1}f_{2}(t) + B_{1}f_{3}(t)$ donde $f_{1}(t) = 1$, $f_{2}(t) = cos(2\pi f_{1}t)$ y $f_{3}(t) = sen(2\pi f_{1}t)$.
 \par
-Para resolver el problema de ajuste se utiliza el método de cuadrados mínimos. El objetivo entonces es encontrar $A_{0}$, $A_{1}$ y $B_{1}$ tal que 
+Para resolver el problema de ajuste se utiliza el método de cuadrados mínimos \citep{mathews}. El objetivo entonces es encontrar $A_{0}$, $A_{1}$ y $B_{1}$ tal que 
 $\displaystyle\sum_{\substack{k=1}}^{n} (v(t_{k})- v_{k})^{2} $ sea mínimo.
 \par
 Si definimos la matriz A y los vectores $\vec{x}$ y $\vec{b}$ como:
@@ -461,89 +476,24 @@ donde A tiene dimensiones $n$x$3$, $Q_{1}$ de $n$x$3$, $Q_{2}$ de $n$x$(n-3)$ y 
 La solución se obtiene resolviendo $R_{1}\vec{x} = Q_{1}^{T}\vec{b} $ por sustitución hacia atrás ya que $R_{1}$ es triangular superior.
 
 
-\vspace{0.5cm}
+\vspace{1cm}
 %-------------------------------------------------------------------------
 \section{Resultados y conclusiones}
 \label{section:results}
 
-\subsection{Curvas obtenidas mediante simulaciones}
-
-El valor de la constante $\mu$ hallado mediante la ecuación \ref{equation:lsSystemSolution} es $1.87 \text{ yr}^{-1}$, y el de $K$ es $8.22 \text{ yr}^{-1}$. Dado que el valor de $\mu$ es mayor que $1 \text{ yr}^{-1}$, 
-en ausencia de presas la población de predadores desaparece en menos de un año.\\
-
-Mediante la obtención de los residuos de la aproximación por cuadrados mínimos, se evalúa qué tan certero es el valor de $\mu$ hallado. La figura \ref{figure:residuals} muestra dichos residuos. 
-Puede verse que para varios valores del tiempo, los residuos son cercanos a $0$. No obstante, particularmente para el valor $t = 8.8 \text{ yr}$, se tiene un residuo de $r = 2.68$. Dado que éste es muy distinto a los valores esperados, se evalúa si constituye un \textit{outlier} en la distribución de residuos encontrada. La media muestral es $m = 0$, y el desvío estándar es $\sigma = 0.67$. $r$ es mayor a $3 \sigma = 2.01$, por lo tanto es considerado un \textit{outlier}. Sin embargo, como es el único \textit{outlier} presente, puede considerarse que la aproximación es aceptable.\\
 
 
-
-A partir del valor de $\mu$ hallado, y utilizando los valores conocidos de las demás constantes, se utiliza el método de \textit{Runge-Kutta} de cuarto orden \citep{mathews} para resolver numéricamente las ecuaciones 
-\ref{equation:preys} y \ref{equation:predators}. El paso utilizado fue $h = 0.01 \text{ yr}$. La figura \ref{figure:simmulatedPopulations} muestra las poblaciones obtenidas de esta manera. Puede observarse que las curvas periódicas obtenidas 
-son similares a la de la figura \ref{figure:populations}, correspondiente al conjunto de datos; no obstante, en las curvas simuladas, no se alcanzan los picos de las curvas reales.\\
-
-
-Las poblaciones obtenidas mediante la simulación pueden utilizarse para construir el espacio de fases dado por la ecuación \ref{equation:phaseSpace}. La misma puede observarse en la figura \ref{figure:phaseSpace}. 
-La curva obtenida es cerrada, hecho que indica que los períodos de las poblaciones $x$ e $y$ son iguales.\\
-
-Es interesante tener la posibilidad de conocer cómo crecen y decrecen las poblaciones a medida que pasa el tiempo. En ausencia de las curvas de las figuras \ref{figure:populations} y 
-\ref{figure:simmulatedPopulations}, esto es imposible debido a que la figura \ref{figure:phaseSpace} es una trayectoria en la que no está involucrada la variable tiempo. Sin embargo, 
-puede calcularse el sentido de esta trayectoria y, así, tener información de la evolución dinámica de las poblaciones. Para determinarlo se obtiene, en base a las poblaciones simuladas, 
-el valor de $\dot{y}$ en el par $(x, y)$ en el cual $x$ es máximo. Este par corresponde a $x = 154.13$ e $y = 76.10$, y en este punto se tiene $\dot{y} = 267.97 \text{ yr}^{-1}$. Dado que este valor es positivo,
-la población de predadores crece, con lo que el sentido resulta ser antihorario.
-
-\subsection{Períodos de las poblaciones}
-
-Realizando simulaciones utilizando los parámetros dados y variando $\mu$, se obtiene que
-dichos períodos decrecen hasta aproximadamente $\mu = 10 \text{ yr}^{-1}$, en donde alcanzan un mínimo luego del cual comienzan a crecer. En este mínimo, los períodos son de $2.37 \text{ yr}$. 
-Similarmente, realizando simulaciones utilizando los parámetros dados y el $\mu$ estimado (utilizando la ecuación \ref{equation:lsSystemSolution}) y variando el valor del parámetro $\lambda$, se obtienen
-los valores de los períodos en función de $\lambda$. Nuevamente, los períodos son decrecientes hasta un mínimo, luego del cual comienzan a crecer. El mínimo se produce para $\lambda = 7 \text{ yr}^{-1}$
-aproximadamente, en donde los períodos son de $3.37 \text{ yr}$. En la figura \ref{figure:periods} se aprecia la forma en que varía el período para distintos valores de $\mu$, y para distintos valores de $\lambda$.
-
-
-\subsection{Desfasaje en las curvas}
-
-Dada la periodicidad de las curvas que representan a las poblaciones, se realizan simulaciones con el motivo de obtener una dependencia 
-entre el desfasaje $\phi$ entre las poblaciones de presas y predadores, y el parámetro $a$. En otras palabras, se busca determinar $\phi$ tal que $\phi = \phi(a)$.\\
-
-Para valores de $a$ variando desde $0.02 \text{ yr}^{-1}$ hasta $1 \text{ yr}^{-1}$ (se considera innecesario hacer la evaluación para valores más cercanos a $0$, debido a que eso implicaría la inexistencia de encuentros 
-perjudiciales para las presas), se obtiene la gráfica de $\phi$ en función de $a$, detallada en la figura \ref{figure:phi}.
-En base a ésta, estimando geométricamente el comportamiento de la gráfica, se propone que el desfasaje obedezca una ecuación de la forma:
-\begin{equation}
-\phi(a) = \frac{1}{A (a + d)^2 + B (a + d) + C}
-\label{equation:fi_eq2}
-\end{equation}
-donde $A$, $B$, $C$ y $d$ son constantes reales.\\
-
-Puede realizarse una deducción empírica de tales constantes con el objeto de aproximar mediante una ecuación, de la mejor manera posible, el gráfico expuesto en la figura \ref{figure:phi}. Haciendo esto, se 
-tiene que para $A = 344.83 \text{ yr}$, $B = 27.59$, $C = 6.90 \text{ yr}^{-1}$ y $d = -0.35 \text{ yr}^{-1}$, el gráfico de $\phi(a)$ es el observado en la figura \ref{figure:phiSimApprox}.
-Se decide, entonces, aproximar $\phi$ mediante la ecuación \ref{equation:fi_eq2} con estos valores de las constantes reales.
-
-
-
-\subsection{Poblaciones de equilibrio}
-
-El punto de equilibrio para el cual las poblaciones se mantienen constantes se obtiene reemplazando los datos $\lambda$, $\mu$, $a$ y $b$ por sus respectivos valores en la ecuación \ref{equation:eq1}, 
-lo cual resulta en $(x_{eq}, y_{eq}) = (53.52, 75)$. \\
-
-Habiendo calculado, de manera empírica, cuáles son las condiciones iniciales tales que ambas poblaciones perduren en el tiempo, se obtiene el gráfico de la figura \ref{figure:prob2b}. Del mismo puede deducirse que las poblaciones con gran cantidad de presas y pocos predadores, o con pocas presas y muchos predadores, tienen mayor probabilidad de sobrevivir que el caso en el que ambas poblaciones son grandes. Se confirma que, como lo indican las ecuaciones \ref{equation:preys} y \ref{equation:predators}, si hay muchas presas y muchos predadores, la velocidad de crecimiento de los predadores es muy alta y además las presas tienen una velocidad negativa de crecimiento considerable, lo que lleva a la extinción de las presas y por consiguiente a la extinción de los predadores.
-
-
-\subsection{Linealización}
-
-La ecuación \ref{equation:clearLinearization}, correspondiente a la linealización del sistema, puede reformularse de la siguiente manera:
-\begin{equation}
-\dot{x} \approx -\frac{a \mu}{b} \left( y - \frac{\lambda}{a}\right)
-\label{equation:preysLinear2}
-\end{equation}
-\begin{equation}
-\dot{y} \approx \frac{b \lambda}{a}\left(x - \frac{\mu}{b}\right)
-\label{equation:predatorsLinear2}
-\end{equation}
-
-Es interesante notar que, a puntos cercanos a $X_{eq} = (\frac{\mu}{b}, \frac{\lambda}{a})$ la variación de la población de las presas es directamente proporcional a la diferencia de población de los predadores con respecto a la población de equilibrio, y viceversa. 
-
+\vspace{1cm}
 %-------------------------------------------------------------------------
 
 \begin{thebibliography}{1}
+
+\bibitem[Haslett, J. y Raftery, A. E.(1989)]{haslett}
+	Haslett, J.,
+	Raftery, Adrian E.,
+	``Space-time Modelling with
+   	Long-memory Dependence: Assessing Ireland's Wind Power Resource'',
+	1989 
 
 \bibitem[Mathews y Fink(1992)]{mathews}
 	Mathews, John H.,
@@ -557,16 +507,17 @@ Es interesante notar que, a puntos cercanos a $X_{eq} = (\frac{\mu}{b}, \frac{\l
 
 %-------------------------------------------------------------------------
 
-\clearpage
-\section{Código}
-\subsection{Householder}
-\verbatimtabinput{../src/householder.m}
-\clearpage
-\subsection{Givens}
-\verbatimtabinput{../src/givens.m}
-\vspace{0.5cm}
-\verbatimtabinput{../src/givensrot.m}
-\clearpage
+\begin{figure}
+	\verbatimtabinput{../src/householder.m}
+	\caption{Implementación de la factorización QR por medio de Householder.}
+\end{figure}
+
+\begin{figure}
+	\verbatimtabinput{../src/givens.m}
+	\vspace{0.5cm}
+	\verbatimtabinput{../src/givensrot.m}
+	\caption{Implementación de la factorización QR por medio de Givens.}
+\end{figure}
 
 
 
