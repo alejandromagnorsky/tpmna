@@ -379,9 +379,9 @@ Velocidad del viento; Cuadrados mínimos; Irlanda.
 \par
 La energía eólica es aquella obtenida a partir del viento. Se trata de energía cinética generada por medio de las corrientes de aire, la cual es transformada en otras formas útiles de energía para las actividades humanas. Las ventajas de la energía eólica es que es un recurso abundante, renovable y limpio. Sin embargo, el principal inconveniente es su intermitencia. 
 \par
-Para poder aprovechar la energía eólica es importante conocer la velocidad del viento. Esto incluye la velocidad máxima y mínima. Para poder utilizar la energía del viento, es necesario que este alcance una velocidad mínima que depende del aerogenerador que se vaya a utilizar pero que suele empezar entre los 3 m/s y los 4 m/s, y que no supere los 25 m/s. En los aerogeneradores la energía eólica mueve una hélice y mediante un sistema mecánico se hace girar el rotor de un generador que produce energía eléctrica. Para que su instalación resulte rentable, suelen agruparse en concentraciones denominadas parques eólicos.
+Para poder aprovechar la energía eólica es importante conocer la velocidad del viento. Esto incluye la velocidad máxima y mínima. Para poder utilizar la energía del viento, es necesario que éste alcance una velocidad mínima que depende del aerogenerador que se vaya a utilizar pero que suele empezar entre los 3 m/s y los 4 m/s, sin exceder los 25 m/s. En los aerogeneradores la energía eólica mueve una hélice y mediante un sistema mecánico se hace girar el rotor de un generador que produce energía eléctrica. Para que su instalación resulte rentable, suelen agruparse en concentraciones denominadas parques eólicos.
 \par
-El gobierno irlandés consideró la posibilidad de utilizar la energía eólica para satisfacer una porción significativa de las necesidades enérgicas de Irlanda. Para determinar la conveniencia y los lugares con mayor potencial se realizó un relevamiento de las velocidades del viento medidas por 12 estaciones meteorológicas
+El gobierno irlandés consideró la posibilidad de utilizar la energía eólica para satisfacer una porción significativa de las necesidades energéticas de Irlanda. Para determinar la conveniencia y los lugares con mayor potencial se realizó un relevamiento de las velocidades del viento medidas por 12 estaciones meteorológicas
 distribuidas a lo largo del territorio. Cabe mencionar que existen distintas escalas de implementación de energía eólica: desde la calefacción de edificios hasta el abastecimiento de energía eléctrica de un cierto porcentaje de la población de una ciudad. 
 \par
 Antes de instalar y comenzar a operar un aerogenerador en un potencial lugar para producir otras fuentes de energía usando la eólica se suele utilizar registros de las velocidades del viento en dicha zona a lo largo de varios meses. La energía que puede producir un aerogenerador es una función no lineal de la velocidad del viento. Por lo tanto, el cálculo de la velocidad media del viento en la zona es insuficiente. Se hace, entonces, necesaria la estimación de la distribución completa de las velocidades \citep{haslett}.
@@ -475,6 +475,58 @@ donde A tiene dimensiones $n$x$3$, $Q_{1}$ de $n$x$3$, $Q_{2}$ de $n$x$(n-3)$ y 
 \par
 La solución se obtiene resolviendo $R_{1}\vec{x} = Q_{1}^{T}\vec{b} $ por sustitución hacia atrás ya que $R_{1}$ es triangular superior.
 
+\subsection{Cálculo del error cuadrático medio de la aproximación}
+\par
+El error cuadrático medio se calcula mediante la siguiente ecuación:\\
+\begin{equation}
+ E_{cm} = \sqrt{\frac{\sum_{k=1}^n e_k^2}{n}}
+\end{equation}
+siendo $e_k$ el error en un punto $(t_k, v_k)$, tal que:
+\par
+\begin{equation}
+ e_k = v_k - v(t_k)
+\end{equation}
+\par
+para un conjunto de $n$ mediciones de la velocidad el viento $v_k$ para el día número $t_k$.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l|r}
+			Estación meteorológica & $E_cm$ (m/s) \\
+			\hline
+			Roche's Pt. & 7.4589 \\ 
+			Valentia & 6.6991 \\
+			Rosslare & 6.9595 \\
+			Kilkenny & 4.5010 \\
+			Shannon & 6.6909 \\
+			Birr & 4.9728 \\
+			Dublin & 6.2177 \\
+			Claremorris & 5.7837 \\
+			Mullingar & 5.5155 \\
+			Clones & 5.7704 \\
+			Belmullet & 8.1367 \\
+			Malin head & 8.9963 \\
+		\end{tabular}
+		\caption{Error cuadrático medio para cada estación meteorológica.}
+		\label{table:ecm}
+	\end{center}
+\end{table}
+
+\vspace{0.5cm}
+
+La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadrático medio para cada estación meteorológica considerada.
+
+\subsection{Valor medio de días por año}
+
+\subsection{Histograma del error}
+!!!!!!!! LA FIGURA \ref{figure:histo} ES TENTATIVA, NO SABEMOS SI ES LO QUE SE PIDE \\
+!!!!!!!! ADEMAS ES PARA UNA SOLA ESTACION, FALTARIAN 11 GRAFICOS MAS ASI
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale = 0.35]{img/histo.png}
+	\caption{Histograma del error}
+	\label{figure:histo}
+\end{figure}
 
 \vspace{1cm}
 %-------------------------------------------------------------------------
