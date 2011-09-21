@@ -2,7 +2,7 @@ function x = prob3(qrFunction)
 
 data = load("../data/windms.data");
 n = length(data(:,1));
-data = data(:,4:length(data(1,:)));
+data = data(:,4:end);
 
 t = 1:n;
 f1 = 1/365.25;

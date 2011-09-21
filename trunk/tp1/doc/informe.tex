@@ -401,18 +401,18 @@ Con el fin de conocer mejor cómo son los datos obtenidos de la medición de la 
 		\begin{tabular}{l|r}
 			Estación meteorológica & Velocidad media (m/s) \\
 			\hline
-			Roche's Pt. & 6.3599 \\ 
-			Valentia & 5.4765 \\
-			Rosslare & 5.9980 \\
-			Kilkenny & 3.2439 \\
-			Shannon & 5.3790 \\
-			Birr & 3.6483 \\
-			Dublin & 5.0395 \\
-			Claremorris & 4.3695 \\
-			Mullingar & 4.3702 \\
-			Clones & 4.4790 \\
-			Belmullet & 6.7494 \\
-			Malin head & 8.0244 \\
+			Roche's Pt. & 6.3604 \\ 
+			Valentia & 5.4770 \\
+			Rosslare & 5.9984 \\
+			Kilkenny & 3.2442 \\
+			Shannon & 5.3794 \\
+			Birr & 3.6485 \\
+			Dublin & 5.0399 \\
+			Claremorris & 4.3699 \\
+			Mullingar & 4.3706 \\
+			Clones & 4.4794 \\
+			Belmullet & 6.7500 \\
+			Malin head & 8.0250 \\
 		\end{tabular}
 		\caption{Velocidades medias en cada estación meteorológica.}
 		\label{table:speed}
@@ -477,35 +477,33 @@ La solución se obtiene resolviendo $R_{1}\vec{x} = Q_{1}^{T}\vec{b} $ por susti
 
 \subsection{Cálculo del error cuadrático medio de la aproximación}
 \par
-El error cuadrático medio se calcula mediante la siguiente ecuación:\\
+El error cuadrático medio se calcula mediante la siguiente ecuación:
 \begin{equation}
  E_{cm} = \sqrt{\frac{\sum_{k=1}^n e_k^2}{n}}
 \end{equation}
 siendo $e_k$ el error en un punto $(t_k, v_k)$, tal que:
-\par
 \begin{equation}
  e_k = v_k - v(t_k)
 \end{equation}
-\par
 para un conjunto de $n$ mediciones de la velocidad el viento $v_k$ para el día número $t_k$.
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{l|r}
-			Estación meteorológica & $E_cm$ (m/s) \\
+			Estación meteorológica & $E_{cm}$ (m/s) \\
 			\hline
-			Roche's Pt. & 7.4589 \\ 
-			Valentia & 6.6991 \\
-			Rosslare & 6.9595 \\
-			Kilkenny & 4.5010 \\
-			Shannon & 6.6909 \\
-			Birr & 4.9728 \\
-			Dublin & 6.2177 \\
-			Claremorris & 5.7837 \\
-			Mullingar & 5.5155 \\
-			Clones & 5.7704 \\
-			Belmullet & 8.1367 \\
-			Malin head & 8.9963 \\
+			Roche's Pt. & 2.7777 \\ 
+			Valentia & 2.6051 \\
+			Rosslare & 2.4946 \\
+			Kilkenny & 1.8217 \\
+			Shannon & 2.4984 \\
+			Birr & 2.0097 \\
+			Dublin & 2.4404 \\
+			Claremorris & 2.2754 \\
+			Mullingar & 2.1014 \\
+			Clones & 2.2598 \\
+			Belmullet & 2.9600 \\
+			Malin head & 3.2619 \\
 		\end{tabular}
 		\caption{Error cuadrático medio para cada estación meteorológica.}
 		\label{table:ecm}
@@ -513,7 +511,7 @@ para un conjunto de $n$ mediciones de la velocidad el viento $v_k$ para el día 
 \end{table}
 
 \vspace{0.5cm}
-
+\par
 La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadrático medio para cada estación meteorológica considerada.
 
 \subsection{Valor medio de días por año}
@@ -522,10 +520,11 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 !!!!!!!! LA FIGURA \ref{figure:histo} ES TENTATIVA, NO SABEMOS SI ES LO QUE SE PIDE \\
 !!!!!!!! ADEMAS ES PARA UNA SOLA ESTACION, FALTARIAN 11 GRAFICOS MAS ASI
 \begin{figure}[h]
-	\centering
-	\includegraphics[scale = 0.35]{img/histo.png}
-	\caption{Histograma del error}
-	\label{figure:histo}
+	\begin{center}
+		\includegraphics[scale = 0.5]{img/histo.png}
+		\caption{Histograma del error}
+		\label{figure:histo}
+	\end{center}
 \end{figure}
 
 \vspace{1cm}
