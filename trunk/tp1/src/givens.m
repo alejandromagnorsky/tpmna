@@ -4,7 +4,7 @@ function [Q R] = givens(A)
 	m = length(A);
 	n = length(A(:,1));
 
-	Q = eye(m,m);
+	Q = eye(m);
 	R = A;
 	
 	% Bottom-up until diagonal, then left-right.
