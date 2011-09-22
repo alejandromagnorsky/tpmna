@@ -433,7 +433,7 @@ donde $t$ es el tiempo en días, $v(t)$ es la velocidad del viento en el instant
 $v(t)$ es lineal en función de $A_{0}$, $A_{1}$ y $B_{1}$ y se puede expresar como $v(t) = A_{0}f_{1}(t) + A_{1}f_{2}(t) + B_{1}f_{3}(t)$ donde $f_{1}(t) = 1$, $f_{2}(t) = cos(2\pi f_{1}t)$ y $f_{3}(t) = sen(2\pi f_{1}t)$.
 \par
 Para resolver el problema de ajuste se utiliza el método de cuadrados mínimos \citep{mathews}. El objetivo entonces es encontrar $A_{0}$, $A_{1}$ y $B_{1}$ tal que 
-$\displaystyle\sum_{\substack{k=1}}^{n} (v(t_{k})- v_{k})^{2} $ sea mínimo.
+$\displaystyle\sum_{\substack{k=1}}^{n} (v_{k} - v(t_{k}))^{2} $ sea mínimo.
 \par
 Si definimos la matriz A y los vectores $\vec{x}$ y $\vec{b}$ como:
 \begin{equation}
@@ -485,7 +485,11 @@ siendo $e_k$ el error en un punto $(t_k, v_k)$, tal que:
 \begin{equation}
  e_k = v_k - v(t_k)
 \end{equation}
-para un conjunto de $n$ mediciones de la velocidad el viento $v_k$ para el día número $t_k$.
+para un conjunto de $n$ mediciones de la velocidad el viento $v_k$ para el día número $t_k$.\\
+
+!!!!!!!! USAR $||Q_{2}^{T}\vec{b}||^{2}$ PARA CALCULAR $\sum_{k=1}^n e_k^2$ \\
+!!!!!!!! USAR hist(ek) para cada estacion meteorologica \\
+!!!!!!!! MEJORAR GIVENS USANDO LA FORMA DE LAS MATRICES G
 
 \begin{table}
 	\begin{center}
@@ -517,8 +521,6 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \subsection{Valor medio de días por año}
 
 \subsection{Histograma del error}
-!!!!!!!! LA FIGURA \ref{figure:histo} ES TENTATIVA, NO SABEMOS SI ES LO QUE SE PIDE \\
-!!!!!!!! ADEMAS ES PARA UNA SOLA ESTACION, FALTARIAN 11 GRAFICOS MAS ASI
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale = 0.5]{img/histo.png}
@@ -560,7 +562,7 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 
 \begin{figure}
 	\verbatimtabinput{../src/householder.m}
-	\caption{Implementación de la factorización QR por medio de Householder.}
+	\caption{Implementación de la resolución de cuadrados mínimos por medio de la factorización QR usando Householder.}
 \end{figure}
 
 \begin{figure}
