@@ -479,7 +479,7 @@ La solución se obtiene resolviendo $R_{1}\vec{x} = Q_{1}^{T}\vec{b} $ por susti
 \par
 El error cuadrático medio se calcula mediante la siguiente ecuación:
 \begin{equation}
- E_{cm} = \sqrt{\frac{\sum_{k=1}^n e_k^2}{n}}
+ E_{cm} = \sqrt{\frac{\sum_{k=1}^n e_k^2}{n}} = \sqrt{\frac{||Q_{2}^{T}\vec{b}||^{2}}{n}}
 \end{equation}
 siendo $e_k$ el error en un punto $(t_k, v_k)$, tal que:
 \begin{equation}
@@ -487,8 +487,6 @@ siendo $e_k$ el error en un punto $(t_k, v_k)$, tal que:
 \end{equation}
 para un conjunto de $n$ mediciones de la velocidad el viento $v_k$ para el día número $t_k$.\\
 
-!!!!!!!! USAR $||Q_{2}^{T}\vec{b}||^{2}$ PARA CALCULAR $\sum_{k=1}^n e_k^2$ \\
-!!!!!!!! USAR hist(ek) para cada estacion meteorologica \\
 !!!!!!!! MEJORAR GIVENS USANDO LA FORMA DE LAS MATRICES G
 
 \begin{table}
