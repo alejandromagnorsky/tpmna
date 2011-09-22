@@ -1,15 +1,18 @@
 function prob3d()
-
+	[x,e] = prob3a();
 	data = load("../data/windms.data");
 	n = length(data(:,1));
+	quant = 12;
+	data = data(:,4:end);
 	t = 1:n;
-	x = prob3(@qr);
 
-	%SOLO PARA LA PRIMER ESTACION POR AHORA
-	for i = 1:n
-		ek(i) = abs(data(i,4) - v(t(i), x(1,1), x(2,1),x(3,1)));
-	endfor
-
-	plot(t,ek, "*b");
-	print -dpng -r85 histo.png
+	% Para los histogramas
+	e = zeros(n,1);
+	for j = 1:quant
+                for i = 1:n
+                        e(i) = data(i,j) - v(t(i), x(1,j), x(2,j),x(3,j));
+                endfor
+		figure(j);
+		hist(e);
+        endfor
 endfunction
