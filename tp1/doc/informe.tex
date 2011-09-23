@@ -10,6 +10,25 @@
 \usepackage{natbib}
 \usepackage{moreverb}
 \usepackage{url}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{caption}
+
+\lstloadlanguages{Octave}
+\captionsetup[lstlisting]{ singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  %numbers=left,
+  numberstyle=\tiny,
+  %stepnumber=2,
+  numbersep=5pt,
+  tabsize=8,
+  extendedchars=true,
+  breaklines=true,
+  framexleftmargin=17pt,
+  framexrightmargin=5pt,
+  showstringspaces=false
+}
 
 \ifCLASSINFOpdf
 \else
@@ -555,21 +574,20 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 	
 \end{thebibliography}
 
-
 %-------------------------------------------------------------------------
 
+
 \begin{figure}
-	\verbatimtabinput{../src/householder.m}
-	\caption{Implementación de la resolución de cuadrados mínimos por medio de la factorización QR usando Householder.}
+	\lstinputlisting[label=lst:householder,caption=Implementación de la factorización QR usando reflexiones de Householder.]{../src/householder.m}
 \end{figure}
 
 \begin{figure}
-	\verbatimtabinput{../src/givens.m}
-	\vspace{0.5cm}
-	\verbatimtabinput{../src/givensrot.m}
-	\caption{Implementación de la factorización QR por medio de Givens.}
+	\lstinputlisting[label=lst:gramschmidt,caption=Implementación de la factorización QR por medio del método de Gram-Schmidt.]{../src/gramSchmidt.m}
 \end{figure}
 
+\begin{figure}
+	\lstinputlisting[label=lst:givens,caption=Implementación de la factorización QR por medio rotaciones de Givens.]{../src/givens.m}
+\end{figure}
 
 
 % trigger a \newpage just before the given reference
