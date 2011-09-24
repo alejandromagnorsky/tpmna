@@ -422,7 +422,7 @@ donde $t$ es el tiempo en días, $v(t)$ es la velocidad del viento en el instant
 $v(t)$ es lineal en función de $A_{0}$, $A_{1}$ y $B_{1}$ y se puede expresar como $v(t) = A_{0}f_{1}(t) + A_{1}f_{2}(t) + B_{1}f_{3}(t)$ donde $f_{1}(t) = 1$, $f_{2}(t) = cos(2\pi f_{1}t)$ y $f_{3}(t) = sen(2\pi f_{1}t)$.
 \par
 Para resolver el problema de ajuste se utiliza el método de cuadrados mínimos \citep{mathews}. El objetivo entonces es encontrar $A_{0}$, $A_{1}$ y $B_{1}$ tal que 
-$\displaystyle\sum_{\substack{k=1}}^{n} (v_{k} - v(t_{k}))^{2} $ sea mínimo.
+$\sum_{k=1}^{n} (v_{k} - v(t_{k}))^{2} $ sea mínimo.
 \par
 Si definimos la matriz A y los vectores $\vec{x}$ y $\vec{b}$ como:
 \begin{equation}
@@ -446,11 +446,11 @@ v_{n} \\
 \end{equation}
 entonces, el objetivo puede expresarse como encontrar $\vec{x}$ tal que $||A\vec{x} - {b}||^{2}$ sea mínimo.
 \par
-La solución clásica al problema de cuadrados mínimos es hacer $\vec{x} = (A^{T}A)^{-1}A^{T}\vec{b}$. Sin embargo, calcular la inversa de una matriz es de $O(n^{3})$. Es por eso que se optó por resolver el problema utilizando la factorización QR obtenida por:
+La solución clásica al problema de cuadrados mínimos es hacer $\vec{x} = (A^{T}A)^{-1}A^{T}\vec{b}$. Sin embargo, calcular la inversa de una matriz es de $O(n^{3})$. Es por eso que, en general, se opta por resolver el problema utilizando la factorización QR obtenida por:
 \begin{itemize}
 \item Householder
-\item Givens
 \item Gram-Schmidt
+\item Givens
 \end{itemize}
 \par
 La forma de resolver el problema de cuadrados mínimos usando QR consiste en:
@@ -626,6 +626,31 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \par
 A continuación se detallan de manera general algunos puntos considerados relevantes para cada una de las implementaciones de los métodos de descomposición QR considerados en este trabajo, para una matriz $A$ de $mxn$, con $m \geq n$.
 
+\vspace{0.5cm}
+\subsubsection{Reflexiones de Householder}
+\par
+El algoritmo consiste en usar las matrices de Householder para hacer 0 todos los elementos debajo de la diagonal para cada columna de la matriz $A$. La matriz de Householder se define como:
+\begin{equation}
+H = \mathbb{I} - 2\frac{\vec{u}\vec{u}^{T}}{||\vec{u}||^{2}}
+\label{equation:householder}
+\end{equation}
+con $\vec{u} = \vec{x}$ excepto en el elemento que no queremos que sea 0, donde toma el valor $\vec{u}_{k} = \vec{x}_{k} + \sigma$, siendo $\vec{x}$ el vector columna que sobre el que se está operando y $\sigma = sign(x_{k})||\vec{x}||$.
+\par
+Con el fin de optimizar el algoritmo se realizaron ciertas modificaciones usando las siguientes igualdades:
+\begin{equation}
+||\vec{u}||^{2} = \sum_{i=1}^{n} u_{i}^{2} = \sum_{i=2}^{n} x_{i}^{2} + (x_{1}+\sigma)^{2}
+ = \sum_{i=2}^{n} x_{i}^{2} + x_{1}^{2} + 2x_{1}\sigma + \sigma^{2} = 2(||\vec{x}||^{2} + x_{1}\sigma)
+\end{equation}
+\begin{equation}
+R_{k:m,k} = H\vec{x} = \vec{x} - 2\frac{\vec{u}\vec{u}^{T}\vec{x}}{||\vec{u}||^{2}} = \vec{x} - \vec{u}\frac{2(||\vec{x}||^{2}+x_{1}\sigma)}{||\vec{u}||^{2}} = \vec{x} - \vec{u}
+\end{equation}
+\begin{equation}
+R_{k,k} = \vec{x}_{1} - \vec{u}_{1} = \vec{x}_{1} - (\vec{x}_{1} + \sigma) = -\sigma
+\end{equation}
+\par
+A su vez, como el cálculo de $Q$ es muy costoso ya que requiere de la multiplicación de matrices de $mxm$ ($m$ es el número de filas), se optó por calcular directamente $Q_{1}\vec{b}$, ya que para ello se multiplican entre sí vectores y no matrices. La desventaja de esto es que el algoritmo devuelve los coeficientes de la aproximación, en lugar de $Q$ y $R$. Esto implica que hay que ejecutarlo una vez para cada función que se quiera aproximar a los datos. En cambio, el algoritmo de Givens y el de Gram-Schmidt se ejecutan una sola vez ya que devuelven las matrices $Q$ y $R$ que luego se utilizan para realizar sustitución hacia atras y obtener los coeficientes para los distintos valores de $\vec{b}$.
+
+\vspace{0.5cm}
 \subsubsection{Rotaciones de Givens}
 \par
 La idea basamental del algoritmo es ir anulando, mediante rotaciones de Givens, los elementos de la matriz $A$ que se encuentren por debajo de la diagonal
@@ -674,6 +699,7 @@ en cuenta, además, que ambos productos deben realizarse en cada iteración.
 \begin{figure}
 	\lstinputlisting[label=lst:givens,caption=Implementación de la factorización QR por medio rotaciones de Givens.]{../src/givens.m}
 \end{figure}
+
 
 
 % trigger a \newpage just before the given reference
