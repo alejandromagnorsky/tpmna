@@ -588,8 +588,19 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \vspace{0.5cm}
 % Comparacion con f_1
 \subsection{Valor medio de días por año}
+Si se realiza un promedio $P$ de la cantidad de días de cómputo durante los cuales se estudió la velocidad del viento en cada
+estación, comprendidos entre los años 1961 y 1978, se obtiene:
+\begin{equation}
+ P = \frac{\displaystyle\sum_{i=1}^{1978-1961+1} cantidad \: de \: d\acute{i}as \: del \: a\tilde{n}o \: i}{1978-1961+1} = 365.22 \approx 365.25
+\end{equation}
 
+Considerando la función de aproximación $v(t)$, más precisamente las funciones sinusoidales $f2(t)$ y $f3(t)$, podemos ver que se está utilizando
+este valor $P$ como período de oscilación; en otras palabras, se estima un intervalo de tiempo dentro del cual la velocidad del viento variará tanto
+como tenga que variar, volviendo a su valor inicial y repitiendo tal proceso cada $365.25$ días.
 
+Se elige este promedio como período de oscilación debido a la existencia de años bisietos (un año de 366 días cada 4 años). Esto implica que, al considerarse un
+promedio de 365 días por año, cada 4 años se estaría produciendo un error de un día. Particularmente, para el caso
+analizado en estas hojas se tiene que los años 1964, 1968, 1972 y 1976 son bisiestos.
 
 \vspace{0.5cm}
 % Comparacion con la velocidad media
@@ -625,7 +636,11 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \subsection{Detalles sobre los algoritmos para la factorización QR}
 \par
 A continuación se detallan de manera general algunos puntos considerados relevantes para cada una de las implementaciones de los métodos de descomposición QR considerados en este trabajo, para una matriz $A$ de $mxn$, con $m \geq n$.
-
+\newline
+\subsubsection{Reflexiones de Householder}
+\par
+\subsubsection{Método de ortogonalización de Gram-Schmidt}
+\par
 \vspace{0.5cm}
 \subsubsection{Reflexiones de Householder}
 \par
@@ -663,14 +678,14 @@ Para dicho cometido, se utiliza una matriz de rotación de Givens $G = G(i)$, qu
 \par
 Definamos entonces a $G_k = G_k(i)$ como la matriz de rotación de Givens para los elementos $(i,j)$ y $(i-1,j)$ en el paso $k$ del algoritmo, a
 $A_{k+1} = G_{k+1} A_k$ como el estado de la matriz inicial $A$ en la $(k+1)$-ésima iteración
-y a $s$ como la cantidad de iteraciones del algoritmo. Se tiene, por lo tanto, que:
+y a $s$ como la cantidad de iteraciones del algoritmo. Se tiene, por lo tanto:
 \begin{equation}
   R = (\displaystyle\prod_{t=1}^s G_{s-t+1}) A
 \end{equation}
 
 \par
 Podemos suponer que se utilizarán tantas matrices de rotación como elementos no nulos haya debajo de la diagonal de $A$, una en cada iteración.
-De manera análoga, definimos $Q_{k+1} = Q_k * G_{k+1}^T$ como el estado de la matriz $Q$ de la descomposicón en la $(k+1)$-ésima iteración. Finalmente:
+De manera análoga, definimos $Q_{k+1} = Q_k * G_{k+1}^T$ como el estado de la matriz $Q$ de la descomposicón en la $(k+1)$-ésima iteración. Finalmente,
 \begin{equation}
 Q = \displaystyle\prod_{t=1}^s G_{t}^T
 \end{equation}
@@ -680,7 +695,7 @@ Debido a las características de las matrices de rotación de Givens (valores nu
 el producto $A_{k+1}$ puede ser computado mediante la modificación de las filas $i$ e $(i-1)$-ésimas de $A_k$ únicamente. Lo mismo ocurre si hablamos de $Q_{k+1}$: es necesario alterar
 solamente las columnas $i$ e $(i-1)$-ésimas de $Q_{k}$. Es aquí dónde el algoritmo de Givens obtiene un gran punto a favor: no es necesario
 calcular el producto matricial entero; sólo basta realizar los cambios necesario en las filas o columnas mencionadas. Esto es especialmente ventajoso
-en casos en dónde se está trabajando con matrices de dimensiones superlativas, en donde la memoria disponible para las operaciones se vuelve un factor delicado, teniendo
+en casos en dónde se esté trabajando con matrices de dimensiones superlativas, en donde la memoria disponible para las operaciones se vuelve un factor delicado, teniendo
 en cuenta, además, que ambos productos deben realizarse en cada iteración.
 
 
@@ -700,6 +715,9 @@ en cuenta, además, que ambos productos deben realizarse en cada iteración.
 	\lstinputlisting[label=lst:givens,caption=Implementación de la factorización QR por medio rotaciones de Givens.]{../src/givens.m}
 \end{figure}
 
+\begin{figure}
+	\lstinputlisting[label=lst:minsquares,caption=Implementación de la resolución del sistema por el método de cuadrados mínimos.]{../src/prob3.m}
+\end{figure}
 
 
 % trigger a \newpage just before the given reference

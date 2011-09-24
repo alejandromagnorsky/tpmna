@@ -10,7 +10,7 @@ function prob3d()
 	e = zeros(n,1);
 	for j = 1:quant
                 for i = 1:n
-                        e(i) = data(i,j) - v(t(i), x(1,j), x(2,j),x(3,j));
+			e(i) = data(i,j) - v(t(i), x(1,j), x(2,j),x(3,j));
                 endfor
 		figure(j);
 		hist(e);
