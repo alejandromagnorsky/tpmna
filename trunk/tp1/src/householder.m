@@ -1,6 +1,6 @@
 % A es una matriz de mxn con m >= n
 % b es un vector de mx1
-% Devuelve el vector x de nx1 / R1*x = Q1'*b
+% Devuelve el vector x de nx1 tal que R1*x = Q1'*b
 function [x,e] = householder(A,b)
 	[m, n] = size(A);
 	R = A;
