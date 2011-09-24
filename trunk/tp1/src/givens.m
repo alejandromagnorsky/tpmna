@@ -41,7 +41,7 @@ function [Q R] = givens(A)
 				% specially for large matrixes.
 				% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-				%  The following assignations improves:
+				%  The following assignations improve:
 				%	R = G * R
 				%  where:
 				%	- G is the rotation matrix for rotating
@@ -53,7 +53,7 @@ function [Q R] = givens(A)
 				R(i-1,:) = c * aux(1,:) - s * aux(2,:);
 				R(i,:) = s * aux(1,:) + c * aux(2,:);
 
-				%  The following assignations improves:
+				%  The following assignations improve:
 				%	Q = Q * G'
 				%  where:
 				%	- G' is the transpose of (i,j)-with-(i-1,j)

@@ -555,9 +555,44 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 
 \vspace{1cm}
 %-------------------------------------------------------------------------
+\section{Apéndice}
+
+\subsection{Detalles sobre los algoritmos para la factorización QR}
+ A continuación se detallan de manera general algunos puntos considerados relevantes para cada una de las implementaciones de los métodos de descomposición QR considerados en este trabajo, para una matriz $A$ de $mxn$, con $m >= n$.
+
+\subsubsection{Rotaciones de Givens}
+La idea basamental del algoritmo es ir anulando, mediante rotaciones de Givens, los elementos de la matriz $A$ que se encuentren por debajo de la diagonal
+de manera ascendente (de abajo hacia arriba, de izquierda a derecha), empezando por el elemento en la posición $(m,1)$, de manera
+tal que en la última iteración $A$ se convierta en la matriz triangular superior $R$ de la descomposición.
+\par
+En cada paso del algoritmo, se busca rotar el elemento $(i,j)$ con el elemento $(i-1,j)$; esto provoca la anulación del primero.
+Para dicho cometido, se utiliza una matriz de rotación de Givens $G = G(i)$, que se encarga de rotar tales elementos un
+ángulo $\theta = arctan(\frac{-A(i,j)}{A(i-1,j)})$. La anulación del elemento $(i,j)$ se produce mediante el producto de la matriz de rotación y la matriz $A$.
+\par
+Definamos entonces a $G_k = G_k(i)$ como la matriz de rotación de Givens para los elementos $(i,j)$ y $(i-1,j)$ en el paso $k$ del algoritmo, a
+$A_{k+1} = G_{k+1} A_k$ como el estado de la matriz inicial $A$ en la $(k+1)$-ésima iteración
+y a $s$ como la cantidad de iteraciones del algoritmo. Se tiene, por lo tanto, que
+\begin{equation}
+  R = (\displaystyle\prod_{t=1}^s G_{s-t+1}) A
+\end{equation}
+
+Podemos suponer que se utilizarán tantas matrices de rotación como elementos no nulos haya debajo de la diagonal de $A$, una en cada iteración.
+De manera análoga, definimos $Q_{k+1} = Q_k * G_{k+1}^T$ como el estado de la matriz $Q$ de la descomposicón en la $(k+1)$-ésima iteración. Finalmente,
+\begin{equation}
+Q = \displaystyle\prod_{t=1}^s G_{t}^T
+\end{equation}
+
+
+Debido a las características de las matrices de rotación de Givens (valores nulos excepto en los elementos de las diagonales y las posiciones $(i, i-1)$ y $(i-1,i)$ ),
+el producto $A_{k+1}$ puede ser computado mediante la modificación de las filas $i$ e $(i-1)$-ésimas de $A_k$ únicamente. Lo mismo ocurre si hablamos de $Q_{k+1}$: es necesario alterar
+solamente las columnas $i$ e $(i-1)$-ésimas de $Q_{k}$. Es aquí dónde el algoritmo de Givens obtiene un gran punto a favor: no es necesario
+calcular el producto matricial entero; sólo basta realizar los cambios necesario en las filas o columnas mencionadas. Esto es especialmente ventajoso
+en casos en dónde se está trabajando con matrices de dimensiones superlativas, en donde la memoria disponible para las operaciones se vuelve un factor delicado, teniendo
+en cuenta, además, que ambos productos deben realizarse en cada iteración.
+\par
+
 
 \begin{thebibliography}{1}
-
 \bibitem[Haslett, J. y Raftery, A. E.(1989)]{haslett}
 	Haslett, J.,
 	Raftery, Adrian E.,
@@ -575,7 +610,6 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \end{thebibliography}
 
 %-------------------------------------------------------------------------
-
 
 \begin{figure}
 	\lstinputlisting[label=lst:householder,caption=Implementación de la factorización QR usando reflexiones de Householder.]{../src/householder.m}
