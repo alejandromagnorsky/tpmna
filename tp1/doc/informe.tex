@@ -387,6 +387,8 @@ Velocidad del viento; Cuadrados mínimos; Irlanda.
 % page as needed:
 % \ifCLASSOPTIONpeerreview
 % \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+
+
 % \fi
 %
 % For peerreview papers, this IEEEtran command inserts a page break and
@@ -484,7 +486,7 @@ para un conjunto de $n$ mediciones de la velocidad el viento $v_k$ para el día 
 
 \vspace{1cm}
 %-------------------------------------------------------------------------
-\section{Resultados y conclusiones}
+\section{Resultados }
 \label{section:results}
 \vspace{0.5cm}
 \subsection{Cálculo de las velocidades medias}
@@ -641,6 +643,31 @@ A continuación se detallan de manera general algunos puntos considerados releva
 \par
 \subsubsection{Método de ortogonalización de Gram-Schmidt}
 \par
+Para la descomposición QR, el método de ortogonalización de Gram-Schmidt puede utilizarse sobre las columnas de la matriz $ A = [ a_1, \cdots , a_n ] $ donde cada vector $a_{i}$ tiene m elementos. Para la ortogonalización, se calculan los vectores $u_k$ y $e_k$ de forma tal que
+
+\begin{equation}
+u_{k} = a_{k} - \sum_{j=1}^{k-1} proj_{e_{j}}a_{k}
+\end{equation}
+\begin{equation}
+e_{k} = \frac{u_k}{\parallel u_k \parallel}
+\end{equation}
+
+De esta forma, y considerando que todos los vectores $e_k$ son vectores unitarios y forman una base ortogonal debido a su construcción, se pueden definir $ Q = [ e_1, \cdots , e_n ] $ ortogonal y $R$ una matriz triangular superior tal que
+
+\begin{equation}
+\left[
+\begin{array}{cccc}
+\langle e_1, a_1 \rangle & \langle e_1, a_2 \rangle & \cdots & \langle e_1, a_n \rangle \\
+0 & \langle e_2, a_2 \rangle & \cdots & \langle e_2, a_n \rangle \\
+\vdots & \vdots & \vdots & \vdots \\
+0 & 0 & 0 & \langle e_m, a_n \rangle \\
+\end{array}
+\right]
+\end{equation}
+
+La implementación del algoritmo es considerablemente directa con buenos resultados; sin embargo en términos de estabilidad numérica el algoritmo es inestable debido a errores de redondeo por punto flotante. 
+Por otro lado, una pequeña optimización utilizada fue aprovechar el cálculo de los vectores $e_k$ para construir la matriz $R$ progresivamente.
+
 \vspace{0.5cm}
 \subsubsection{Reflexiones de Householder}
 \par
@@ -697,8 +724,6 @@ solamente las columnas $i$ e $(i-1)$-ésimas de $Q_{k}$. Es aquí dónde el algo
 calcular el producto matricial entero; sólo basta realizar los cambios necesario en las filas o columnas mencionadas. Esto es especialmente ventajoso
 en casos en dónde se esté trabajando con matrices de dimensiones superlativas, en donde la memoria disponible para las operaciones se vuelve un factor delicado, teniendo
 en cuenta, además, que ambos productos deben realizarse en cada iteración.
-
-
 
 
 %-------------------------------------------------------------------------
