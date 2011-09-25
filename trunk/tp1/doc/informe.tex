@@ -576,13 +576,6 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \vspace{0.5cm}
 \subsection{Histogramas de los errores}
 
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[scale = 0.5]{img/histo.png}
-		\caption{Histograma del error}
-		\label{figure:histo}
-	\end{center}
-\end{figure}
 
 \vspace{1cm}
 \section{Conclusiones}
@@ -590,12 +583,11 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \vspace{0.5cm}
 % Comparacion con f_1
 \subsection{Valor medio de días por año}
-Si se realiza un promedio $P$ de la cantidad de días de cómputo durante los cuales se estudió la velocidad del viento en cada
-estación, comprendidos entre los años 1961 y 1978, se obtiene:
+Si se realiza un promedio $P$ de la cantidad de días de cómputo, comprendidos entre los años 1961 y 1978, durante los cuales se estudió la velocidad del viento en cada estación, se obtiene:
 \begin{equation}
- P = \frac{\displaystyle\sum_{i=1}^{1978-1961+1} cantidad \: de \: d\acute{i}as \: del \: a\tilde{n}o \: i}{1978-1961+1} = 365.22 \approx 365.25
+ P = \frac{\displaystyle\sum_{i=1}^{1978-1961+1} cantidad \: de \: dias \: del \: a\tilde{n}o \: i}{1978-1961+1} = 365.22 \approx 365.25
 \end{equation}
-
+\par
 Considerando la función de aproximación $v(t)$, más precisamente las funciones sinusoidales $f2(t)$ y $f3(t)$, podemos ver que se está utilizando
 este valor $P$ como período de oscilación; en otras palabras, se estima un intervalo de tiempo dentro del cual la velocidad del viento variará tanto
 como tenga que variar, volviendo a su valor inicial y repitiendo tal proceso cada $365.25$ días.
@@ -649,9 +641,33 @@ por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del 
 \subsection{Detalles sobre los algoritmos para la factorización QR}
 \par
 A continuación se detallan de manera general algunos puntos considerados relevantes para cada una de las implementaciones de los métodos de descomposición QR considerados en este trabajo, para una matriz $A$ de $mxn$, con $m \geq n$.
-\newline
+
+\vspace{0.5cm}
 \subsubsection{Reflexiones de Householder}
 \par
+El algoritmo consiste en usar las matrices de Householder para hacer 0 todos los elementos debajo de la diagonal para cada columna de la matriz $A$. La matriz de Householder se define como:
+\begin{equation}
+H = \mathbb{I} - 2\frac{\vec{u}\vec{u}^{T}}{||\vec{u}||^{2}}
+\label{equation:householder}
+\end{equation}
+con $\vec{u} = \vec{x}$ excepto en el elemento que no queremos que sea 0, donde toma el valor $\vec{u}_{k} = \vec{x}_{k} + \sigma$, siendo $\vec{x}$ el vector columna que sobre el que se está operando y $\sigma = sign(x_{k})||\vec{x}||$.
+\par
+Con el fin de optimizar el algoritmo se realizaron ciertas modificaciones usando las siguientes igualdades:
+\begin{equation}
+||\vec{u}||^{2} = \sum_{i=1}^{n} u_{i}^{2} = \sum_{i=2}^{n} x_{i}^{2} + (x_{1}+\sigma)^{2}
+ = \sum_{i=2}^{n} x_{i}^{2} + x_{1}^{2} + 2x_{1}\sigma + \sigma^{2} = 2(||\vec{x}||^{2} + x_{1}\sigma)
+\end{equation}
+\begin{equation}
+R_{k:m,k} = H\vec{x} = \vec{x} - 2\frac{\vec{u}\vec{u}^{T}\vec{x}}{||\vec{u}||^{2}} = \vec{x} - \vec{u}\frac{2(||\vec{x}||^{2}+x_{1}\sigma)}{||\vec{u}||^{2}} = \vec{x} - \vec{u}
+\end{equation}
+\begin{equation}
+R_{k,k} = \vec{x}_{1} - \vec{u}_{1} = \vec{x}_{1} - (\vec{x}_{1} + \sigma) = -\sigma
+\end{equation}
+\par
+A su vez, como el cálculo de $Q$ es muy costoso ya que requiere de la multiplicación de matrices de $mxm$ ($m$ es el número de filas), se optó por calcular directamente $Q_{1}\vec{b}$, ya que para ello se multiplican entre sí vectores y no matrices. La desventaja de esto es que el algoritmo devuelve los coeficientes de la aproximación, en lugar de $Q$ y $R$. Esto implica que hay que ejecutarlo una vez para cada función que se quiera aproximar a los datos. En cambio, el algoritmo de Givens y el de Gram-Schmidt se ejecutan una sola vez ya que devuelven las matrices $Q$ y $R$ que luego se utilizan para realizar sustitución hacia atras y obtener los coeficientes para los distintos valores de $\vec{b}$.
+
+
+\vspace{0.5cm}
 \subsubsection{Método de ortogonalización de Gram-Schmidt}
 \par
 Para la descomposición QR, el método de ortogonalización de Gram-Schmidt puede utilizarse sobre las columnas de la matriz $ A = [ a_1, \cdots , a_n ] $ donde cada vector $a_{i}$ tiene m elementos. Para la ortogonalización, se calculan los vectores $u_k$ y $e_k$ de forma tal que
@@ -679,29 +695,6 @@ De esta forma, y considerando que todos los vectores $e_k$ son vectores unitario
 La implementación del algoritmo es considerablemente directa con buenos resultados; sin embargo en términos de estabilidad numérica el algoritmo es inestable debido a errores de redondeo por punto flotante. 
 Por otro lado, una pequeña optimización utilizada fue aprovechar el cálculo de los vectores $e_k$ para construir la matriz $R$ progresivamente.
 
-\vspace{0.5cm}
-\subsubsection{Reflexiones de Householder}
-\par
-El algoritmo consiste en usar las matrices de Householder para hacer 0 todos los elementos debajo de la diagonal para cada columna de la matriz $A$. La matriz de Householder se define como:
-\begin{equation}
-H = \mathbb{I} - 2\frac{\vec{u}\vec{u}^{T}}{||\vec{u}||^{2}}
-\label{equation:householder}
-\end{equation}
-con $\vec{u} = \vec{x}$ excepto en el elemento que no queremos que sea 0, donde toma el valor $\vec{u}_{k} = \vec{x}_{k} + \sigma$, siendo $\vec{x}$ el vector columna que sobre el que se está operando y $\sigma = sign(x_{k})||\vec{x}||$.
-\par
-Con el fin de optimizar el algoritmo se realizaron ciertas modificaciones usando las siguientes igualdades:
-\begin{equation}
-||\vec{u}||^{2} = \sum_{i=1}^{n} u_{i}^{2} = \sum_{i=2}^{n} x_{i}^{2} + (x_{1}+\sigma)^{2}
- = \sum_{i=2}^{n} x_{i}^{2} + x_{1}^{2} + 2x_{1}\sigma + \sigma^{2} = 2(||\vec{x}||^{2} + x_{1}\sigma)
-\end{equation}
-\begin{equation}
-R_{k:m,k} = H\vec{x} = \vec{x} - 2\frac{\vec{u}\vec{u}^{T}\vec{x}}{||\vec{u}||^{2}} = \vec{x} - \vec{u}\frac{2(||\vec{x}||^{2}+x_{1}\sigma)}{||\vec{u}||^{2}} = \vec{x} - \vec{u}
-\end{equation}
-\begin{equation}
-R_{k,k} = \vec{x}_{1} - \vec{u}_{1} = \vec{x}_{1} - (\vec{x}_{1} + \sigma) = -\sigma
-\end{equation}
-\par
-A su vez, como el cálculo de $Q$ es muy costoso ya que requiere de la multiplicación de matrices de $mxm$ ($m$ es el número de filas), se optó por calcular directamente $Q_{1}\vec{b}$, ya que para ello se multiplican entre sí vectores y no matrices. La desventaja de esto es que el algoritmo devuelve los coeficientes de la aproximación, en lugar de $Q$ y $R$. Esto implica que hay que ejecutarlo una vez para cada función que se quiera aproximar a los datos. En cambio, el algoritmo de Givens y el de Gram-Schmidt se ejecutan una sola vez ya que devuelven las matrices $Q$ y $R$ que luego se utilizan para realizar sustitución hacia atras y obtener los coeficientes para los distintos valores de $\vec{b}$.
 
 \vspace{0.5cm}
 \subsubsection{Rotaciones de Givens}
@@ -754,6 +747,11 @@ en cuenta, además, que ambos productos deben realizarse en cada iteración.
 \begin{figure}
 	\lstinputlisting[label=lst:minsquares,caption=Implementación de la resolución del sistema por el método de cuadrados mínimos.]{../src/prob3.m}
 \end{figure}
+\begin{figure}
+	\lstinputlisting[label=lst:sust,caption=Implementación de la sustitución hacia atrás.]{../src/sust.m}
+\end{figure}
+
+
 
 
 % trigger a \newpage just before the given reference
