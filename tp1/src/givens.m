@@ -1,5 +1,5 @@
-% Descomposición QR utilizando rotaciones de Givens
-%	A debe ser de mxn, con m >= n
+% A es una matriz de mxn con m >= n
+% Devuelve las matrices Q y R
 function [Q R] = givens(A)
 	m = length(A);
 	n = length(A(1,:));
@@ -27,24 +27,24 @@ function [Q R] = givens(A)
 	for j = 1:n;
 		for i = m:-1:j+1
 			if (R(i,j) != 0)
-				a = R(i-1,j);		% Se rotará b con a
-				b = R(i,j);		% b será el que resulte anulado
+				a = R(i-1,j);		% Se rotara b con a
+				b = R(i,j);		% b sera el que resulte anulado
                                 d = sqrt(a^2 + b^2);	% distancia ab en el plano xy
                                 c = a / d;		% coseno
                                 s = -b / d;		% seno
 				
 				% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-				%  La rotación del elemento en (i,j) con el elemento
-				% en (i-1,j) sólo afecta a las filas i e i-1 de R.
+				%  La rotacion del elemento en (i,j) con el elemento
+				% en (i-1,j) solo afecta a las filas i e i-1 de R.
 				%  Es ineficiente realizar un producto matricial
-				% entero si sólo son afectadas algunas filas,
+				% entero si solo son afectadas algunas filas,
 				% especialmente en matrices de dimensiones grandes.
 				% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 				%  Las siguientes asignaciones mejoran el producto:
 				%	R = G * R
 				%  donde:
-				%	- G es la matriz de rotación de Givens para
+				%	- G es la matriz de rotacion de Givens para
 				% rotar (i,j) con (i-1,j).
 				%	- R es la matriz triangular superior parcial,
 				% para un cierto paso del algoritmo.
@@ -56,9 +56,9 @@ function [Q R] = givens(A)
 				%  Las siguientes asignaciones mejoran el producto:
 				%	Q = Q * G'
 				%  donde:
-				%	- G' es la matriz de rotación de Givens traspuesta
+				%	- G' es la matriz de rotacion de Givens traspuesta
 				% para rotar (i,j) con (i-1,j).
-				%	- Q es la matriz ortogonal parcial de la descomposición,
+				%	- Q es la matriz ortogonal parcial de la descomposicion,
 				% para un cierto paso del algoritmo.
 				
 				aux = [Q(:,i-1)  Q(:,i)];

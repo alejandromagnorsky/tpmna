@@ -1,6 +1,5 @@
-% For testing:
-% [Q, R] = gramSchmidt( [12,-51,4;6,167,-68;-4,24,-41] )
-% Q*R deberia dar la matriz
+% A es una matriz de mxn con m >= n
+% Devuelve las matrices Q y R
  function [Q,R] = gramSchmidt(A)
 	[m, n] = size(A);
 	Q = zeros(m,n);
@@ -15,7 +14,6 @@
 		u = A(:,k) - accum;
 		e(:,k) = u / norm(u);
 		
-		% for R, k is taken as rows...
 		for j=k:n
 			R(k,j) = (e(:,k)'*A(:,j)); 
 		endfor
