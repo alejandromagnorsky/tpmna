@@ -17,7 +17,7 @@ function est = c()
 	b = 24;
 
 	k = 1;
-	for i = 1:12
+	for i = 1:length(data)
 		vm = data(i,1);
 		amp = sqrt(data(i,2)*data(i,2) + data(i,3)*data(i,3));
 		vm_inf = vm - amp/2;
