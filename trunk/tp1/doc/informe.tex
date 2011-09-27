@@ -407,7 +407,7 @@ distribuidas a lo largo del territorio. Cabe mencionar que existen distintas esc
 \par
 Antes de instalar y comenzar a operar un aerogenerador en un potencial lugar para producir otras fuentes de energía usando la eólica se suele utilizar registros de las velocidades del viento en dicha zona a lo largo de varios meses. La energía que puede producir un aerogenerador es una función no lineal de la velocidad del viento. Por lo tanto, el cálculo de la velocidad media del viento en la zona es insuficiente. Se hace, entonces, necesaria la estimación de la distribución completa de las velocidades \citep{haslett}.
 \par
-En la sección \ref{section:development} se explica de que manera se ajustan los datos de las velocidades a una función usando cuadrados mínimos y cómo se calcula el error cuadrático medio. En la sección \ref{section:results} se exponen, para cada estación meteorológica, las funciones que se ajustan a los datos, el error cuadrático medio y las velocidades medias del viento. En la sección \ref{section:conclusions} se sacan comparan los resultados y se mencionan las características más importantes encontradas. En el apéndice se detallan secciones del código utilizado para resolver el problema de cuadrados mínimos.
+En la sección \ref{section:development} se explica de que manera se ajustan los datos de las velocidades a una función usando cuadrados mínimos y cómo se calcula el error cuadrático medio. En la sección \ref{section:results} se exponen, para cada estación meteorológica, las funciones que se ajustan a los datos, el error cuadrático medio y las velocidades medias del viento, comparando los resultados y mencionando las características mas importantes encontradas. En la sección \ref{section:conclusions} se selecciona un subconjunto del total de las ciudades con las condiciones óptimas para la construcción de parques eólicos. En el apéndice se detallan secciones del código utilizado para resolver el problema de cuadrados mínimos.
 \vspace{1cm}
 %-------------------------------------------------------------------------
 \section{Desarrollo}
@@ -587,11 +587,6 @@ Para visualizar los errores, se hicieron histogramas de error para cada estació
 \end{figure}
 
 
-
-\vspace{1cm}
-\section{Conclusiones}
-\label{section:conclusions}
-\vspace{0.5cm}
 % Comparacion con f_1
 \subsection{Valor medio de días por año}
 Si se realiza un promedio $P$ de la cantidad de días de cómputo, comprendidos entre los años 1961 y 1978, durante los cuales se estudió la velocidad del viento en cada estación, se obtiene:
@@ -649,6 +644,13 @@ por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del 
 	\end{center}
 \end{table}
 
+
+
+\vspace{1cm}
+\section{Conclusiones}
+\label{section:conclusions}
+
+\vspace{0.5cm}
 
 
 %-------------------------------------------------------------------------
