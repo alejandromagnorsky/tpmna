@@ -594,7 +594,7 @@ Si se realiza un promedio $P$ de la cantidad de días de cómputo, comprendidos 
  P = \frac{\displaystyle\sum_{i=1}^{1978-1961+1} cantidad \: de \: dias \: del \: a\tilde{n}o \: i}{1978-1961+1} = 365.22 \approx 365.25
 \end{equation}
 \par
-Considerando la función de aproximación $v(t)$, más precisamente las funciones sinusoidales $f2(t)$ y $f3(t)$, podemos ver que se está utilizando
+Considerando la función de aproximación $v(t)$, más precisamente las funciones sinusoidales $f_2(t)$ y $f_3(t)$, podemos ver que se está utilizando
 este valor $P$ como período de oscilación; en otras palabras, se estima un intervalo de tiempo dentro del cual la velocidad del viento variará tanto
 como tenga que variar, volviendo a su valor inicial y repitiendo tal proceso cada $365.25$ días.
 
@@ -649,8 +649,10 @@ por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del 
 \vspace{1cm}
 \section{Conclusiones}
 \label{section:conclusions}
-
 \vspace{0.5cm}
+
+Del total de las ciudades muestradas, se realiza un primer filtro para considerar aquellas que cumplan que su velocidad media sea mayor  a  $\frac{5m}{s}$, ya que la velocidad mínima para poder utilizar el viento como fuente de energia ronda los 3 o 4  $\frac{m}{s}$ dependiendo del aerogenerador. Luego, aplicamos un segundo filtro en el cual se consideran las ciudades que posean oscilaciones de menor amplitud, es decir, que $ \delta =  \sqrt{ A_1^2 + B_1^2 } $ sea mínimo, y que además $ \mu \pm \frac{\delta}{2} \in [4,25]$ 
+
 
 
 %-------------------------------------------------------------------------
