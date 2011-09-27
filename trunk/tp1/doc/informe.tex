@@ -587,6 +587,7 @@ Para visualizar los errores, se hicieron histogramas de error para cada estació
 \end{figure}
 
 
+
 \vspace{1cm}
 \section{Conclusiones}
 \label{section:conclusions}
@@ -606,11 +607,14 @@ Se elige este promedio como período de oscilación debido a la existencia de a�
 promedio de 365 días por año, cada 4 años se estaría produciendo un error de un día. Particularmente, para el caso
 analizado en estas hojas se tiene que los años 1964, 1968, 1972 y 1976 son bisiestos.
 
+
+
 \vspace{0.5cm}
 % Comparacion con la velocidad media
 \subsection{El valor del coeficiente $A_{0}$}
 
-Como la muestra de datos se desarrolló durante un período de 18 años completos, si analizamos la ecuación \ref{equation:model} podemos ver que tanto el segundo término como el tercero se pueden despreciar, ya que
+Como la muestra de datos se desarrolló durante un período de 18 años completos, si analizamos la ecuación \ref{equation:model} podemos ver que tanto el segundo término como el tercero se pueden despreciar, ya que para calcular el valor medio se requieren las integrales
+
 
 \begin{equation}
 \int_0^{(1978-1961+1)365.25 = 6574.5} sin( \frac{2 \pi t}{365.25} )  = \frac{1-cos(\frac{2 \pi 6574.5}{365.25})}{ \frac{2 \pi }{365.25}} = 0 \\ 
@@ -619,7 +623,32 @@ Como la muestra de datos se desarrolló durante un período de 18 años completo
 \int_0^{6574.5} cos( \frac{2 \pi t}{365.25} )  = \frac{sin(\frac{2 \pi 6574.5}{365.25})}{ \frac{2 \pi }{365.25}} = 0 \\ 
 \end{equation}
 
-por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del viento en cada estación metereológica.
+por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del viento en cada estación metereológica. Esto puede apreciarse en la tabla \ref{table:comparison}.
+
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l|c|r}
+			Estación meteorológica & $A_{0}$  Valor medio\\
+			\hline
+			Roche's Pt. & 6.360473 &  6.3604 \\ 
+			Valentia & 5.477037 &  5.4770 \\
+			Rosslare & 5.998487 &  5.9984 \\
+			Kilkenny & 3.244228 & 3.2442 \\
+			Shannon & 5.379480 & 5.3794 \\
+			Birr & 3.648573 &3.6485 \\
+			Dublin & 5.039962 &  5.0399 \\
+			Claremorris & 4.369907 & 4.3699  \\
+			Mullingar & 4.370628 &  4.3706  \\
+			Clones & 4.479414 &  4.4794 \\
+			Belmullet & 6.750024 & 6.7500 \\
+			Malin head & 8.025106 &  8.0250 \\
+		\end{tabular}
+		\caption{Comparación del coeficiente $A_0$ con el valor medio}
+		\label{table:comparison}
+	\end{center}
+\end{table}
+
 
 
 %-------------------------------------------------------------------------
@@ -641,6 +670,7 @@ por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del 
 	1999
 	
 \end{thebibliography}
+
 
 
 %-------------------------------------------------------------------------
