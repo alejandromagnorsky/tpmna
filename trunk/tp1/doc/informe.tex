@@ -400,7 +400,7 @@ Velocidad del viento; Cuadrados mínimos; Irlanda.
 \par
 La energía eólica es aquella obtenida a partir del viento. Se trata de energía cinética generada por medio de las corrientes de aire, la cual es transformada en otras formas útiles de energía para las actividades humanas. Las ventajas de la energía eólica es que es un recurso abundante, renovable y limpio. Sin embargo, el principal inconveniente es su intermitencia. 
 \par
-Para poder aprovechar la energía eólica es importante conocer la velocidad del viento. Esto incluye la velocidad máxima y mínima. Para poder utilizar la energía del viento, es necesario que éste alcance una velocidad mínima que depende del aerogenerador que se vaya a utilizar pero que suele empezar entre los 3 m/s y los 4 m/s, sin exceder los 25 m/s. En los aerogeneradores la energía eólica mueve una hélice y mediante un sistema mecánico se hace girar el rotor de un generador que produce energía eléctrica. Para que su instalación resulte rentable, suelen agruparse en concentraciones denominadas parques eólicos.
+Para poder aprovechar la energía eólica es importante conocer la velocidad del viento. Esto incluye la velocidad máxima y mínima. Para poder utilizar la energía del viento, es necesario que éste alcance una velocidad mínima que depende del aerogenerador que se vaya a utilizar pero que suele empezar entre los 3 $\frac{m}{s}$ y los 4 $\frac{m}{s}$, sin exceder los 25 $\frac{m}{s}$. En los aerogeneradores la energía eólica mueve una hélice y mediante un sistema mecánico se hace girar el rotor de un generador que produce energía eléctrica. Para que su instalación resulte rentable, suelen agruparse en concentraciones denominadas parques eólicos.
 \par
 El gobierno irlandés consideró la posibilidad de utilizar la energía eólica para satisfacer una porción significativa de las necesidades energéticas de Irlanda. Para determinar la conveniencia y los lugares con mayor potencial se realizó un relevamiento de las velocidades del viento medidas por 12 estaciones meteorológicas
 distribuidas a lo largo del territorio. Cabe mencionar que existen distintas escalas de implementación de energía eólica: desde la calefacción de edificios hasta el abastecimiento de energía eléctrica de un cierto porcentaje de la población de una ciudad. 
@@ -496,7 +496,7 @@ Con el fin de conocer mejor cómo son los datos obtenidos de la medición de la 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{l|r}
-			Estación meteorológica & Velocidad media (m/s) \\
+			Estación meteorológica & Velocidad media $[\frac{m}{s}]$ \\
 			\hline
 			Roche's Pt. & 6.3604 \\ 
 			Valentia & 5.4770 \\
@@ -524,7 +524,7 @@ Utilizando la ecuación \ref{equation:ls} se obtuvieron los coeficientes que fig
 \begin{table}
 	\begin{center}
 		\begin{tabular}{l|r|r|r}
-			Estación meteorológica & $A_{0}$ (m/s) & $A_{1}$ (m/s) & $B_{1}$ (m/s) \\
+			Estación meteorológica & $A_{0} [\frac{m}{s}]$ & $A_{1} [\frac{m}{s}]$ & $B_{1} [\frac{m}{s}]$ \\
 			\hline
 			Roche's Pt. & 6.360473 & 1.098654 & 0.273242\\ 
 			Valentia & 5.477037 & 1.031857 & 0.228245 \\
@@ -552,7 +552,7 @@ La tabla \ref{table:ecm} muestra los resultados del cálculo del error cuadráti
 \begin{table}
 	\begin{center}
 		\begin{tabular}{l|r}
-			Estación meteorológica & $E_{cm}$ (m/s) \\
+			Estación meteorológica & $E_{cm} [\frac{m}{s}]$ \\
 			\hline
 			Roche's Pt. & 2.7777 \\ 
 			Valentia & 2.6051 \\
@@ -624,7 +624,7 @@ por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{l|c|r}
-			Estación meteorológica & $A_{0}$ &  Valor medio\\
+			Estación meteorológica & $A_{0} [\frac{m}{s}]$ &  Velocidad media $[\frac{m}{s}]$\\
 			\hline
 			Roche's Pt. & 6.360473 &  6.3604 \\ 
 			Valentia & 5.477037 &  5.4770 \\
@@ -651,7 +651,7 @@ por lo que el valor $A_{0}$ siempre tenderá al valor medio de la velocidad del 
 \label{section:conclusions}
 \vspace{0.5cm}
 
-Del total de las ciudades muestradas, se realiza un primer filtro para considerar aquellas que cumplan que su velocidad media sea mayor  a  $\frac{5m}{s}$, ya que la velocidad mínima para poder utilizar el viento como fuente de energia ronda los 3 o 4  $\frac{m}{s}$ dependiendo del aerogenerador. Luego, aplicamos un segundo filtro en el cual se consideran las ciudades que posean oscilaciones de menor amplitud, es decir, que $ \delta =  \sqrt{ A_1^2 + B_1^2 } $ sea mínimo, y que además $ \mu \pm \frac{\delta}{2} \in [4,25]$ 
+Del total de las ciudades muestradas, se realiza un primer filtro para considerar aquellas que cumplan que su velocidad media sea mayor  a  4 $\frac{m}{s}$, ya que la velocidad mínima para poder utilizar el viento como fuente de energia ronda los 3 $\frac{m}{s}$ o 4  $\frac{m}{s}$ dependiendo del aerogenerador. Luego, aplicamos un segundo filtro en el cual se consideran las ciudades que posean oscilaciones $ \delta =  \sqrt{ A_1^2 + B_1^2 } $, tal que $ (\mu \pm \frac{\delta}{2}) \in [4,25]$.
 
 
 
