@@ -6,20 +6,22 @@ function generatePartiture(wavFile)
 [x, fs, bits] = wavread(wavFile);
 
 Ts = 1/fs;
-% frecuencia maxima
-fa = 524;
-interval = ceil(fs*30/1000);
-quant = 1000;
+interval = floor(fs*30/1000);
+quant = floor(length(x)/interval);
 
 for k=1:quant
 	lower = (k-1)*interval+1;
 	upper = k*interval;
+
 	X = fft(x(lower:upper));
 	X = fftshift(X);
-	f = 1:fa/(interval/2):fa;
-	figure(1);
-	plot(f, abs(X(1:length(f))));
-	[number, pos] = max(X(1:length(f)));
-	f(pos)
-end
+	X = X(floor(length(X)/2)+1:length(X));
+	f = 0:fs/interval:fs/2-1;
+
+	plot(f, abs(X));
+	[number, pos] = max(X);
+	frecuencies(k) = f(pos);
+endfor
+frecuencies
+plot(frecuencies)
 endfunction
