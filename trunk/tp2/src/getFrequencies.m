@@ -1,4 +1,4 @@
-function generatePartiture(wavFile)
+function frequencies = getFrequencies(wavFile)
 
 % x es la señal del sonido
 % fs es la frecuencia de muestreo (cantidad de muestreos por segundo). Es decir, un segundo equivale a fs muestras de x
@@ -20,8 +20,7 @@ for k=1:quant
 
 	plot(f, abs(X));
 	[number, pos] = max(X);
-	frecuencies(k) = f(pos);
+	frequencies(k) = f(pos);
 endfor
-frecuencies
-plot(frecuencies)
+plot(frequencies)
 endfunction
