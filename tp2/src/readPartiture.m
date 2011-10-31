@@ -3,7 +3,7 @@ function readPartiture(sps, bps, triplets)
 	min_octave = 55;
 	triplet_duration = 0.03;
 
-	duration = triplet_duration * length(triplets(:,1));	
+	duration = triplet_duration * length(triplets(:,1));
 	samples = sps * duration;
 	step = 1 / samples;
 
@@ -14,7 +14,7 @@ function readPartiture(sps, bps, triplets)
 		frequency = noteToFrequency(triplets(i,:));
 		t = t + t;
 		wave = [wave sin(t * 2*pi * frequency)];
-	endfor	
+	endfor
 
 	wavwrite(wave', sps, bps, 'audio.wav');
 
