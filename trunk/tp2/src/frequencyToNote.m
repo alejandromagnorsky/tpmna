@@ -2,7 +2,7 @@ function n = frequencyToNote(f)
 	
 	f_A4 = 440;
 	o_A4 = 4;
-	delta = 5;
+	delta = 3;
 	o_interval = [ 32.07 - delta , 61.73 + delta ];
 	up_distance_to_new_octave = 3;
 	down_distance_to_new_octave = 10;
@@ -13,7 +13,7 @@ function n = frequencyToNote(f)
 		octave = octave + 1;
 	endwhile
 
-	sign = octave - o_A4;
+	sign = sign(octave - o_A4);
 	v = f / f_A4;
 	v = log2(v) * 12;
 
