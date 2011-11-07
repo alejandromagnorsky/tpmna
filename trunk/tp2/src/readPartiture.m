@@ -12,7 +12,6 @@ function readPartiture(sps, bps, triplets)
 	wave = 0;
 	for i=1:length(triplets(:,1))
 		frequency = noteToFrequency(triplets(i,:));
-		t = t + t;
 		wave = [wave sin(t * 2*pi * frequency)];
 	endfor
 
