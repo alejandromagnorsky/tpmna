@@ -1,11 +1,11 @@
 function frequencies = getFrequencies(wavFile)
 
-% x es la señal del sonido
-% fs es la frecuencia de muestreo (cantidad de muestreos por segundo). Es decir, un segundo equivale a fs muestras de x
+% x es la onda del sonido
+% fs es la frecuencia de muestreo (cantidad de muestreos por segundo). 
+% Es decir, un segundo equivale a fs muestras de x
 % bits es la cantidad de bits de cada muestra
 [x, fs, bits] = wavread(wavFile);
 
-Ts = 1/fs;
 interval = floor(fs*30/1000);
 quant = floor(length(x)/interval);
 
@@ -18,7 +18,6 @@ for k=1:quant
 	X = X(floor(length(X)/2)+1:length(X));
 	f = 0:fs/interval:fs/2-1;
 
-	plot(f, abs(X));
 	[number, pos] = max(X);
 	frequencies(k) = f(pos);
 endfor
