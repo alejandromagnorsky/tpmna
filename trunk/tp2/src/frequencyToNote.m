@@ -8,7 +8,7 @@ function n = frequencyToNote(f)
 	down_distance_to_new_octave = 10;
 
 	octave = 1;
-	while(f < o_interval(1) || o_interval(2) < f)
+	while(f != 0 && (f < o_interval(1) || o_interval(2) < f))
 		o_interval = o_interval * 2;
 		octave = octave + 1;
 	endwhile
