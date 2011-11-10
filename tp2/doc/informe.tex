@@ -411,6 +411,19 @@ Archivo de sonido; Partitura; Transformada de Fourier; Frecuencia.
 \subsection{Construcción de una partitura a partir de un archivo de sonido}
 El objetivo es la creación de un programa que, dado un archivo de sonido (.wav), genere una partitura. El código se divide en dos archivos o funciones, que son las que se detallan en la figuras \ref{lst:getFrequencies} y \ref{lst:writePartiture}. \\
 
+Una señal física, como lo es la onda del sonido, puede ser representada mediante una función del tiempo continua. Así, un tono puro produce una onda proporcional a:
+\begin{equation}
+x(t) = \sin(f_{0}*t)
+\label{equation:tone}
+\end{equation}
+La ecuación \eqref{equation:tone} es la representación en el tiempo del tono puro, pero también existe una representación en la frecuencia. Las canciones están formadas por sucesiones y superposiciones de funciones de la forma de la ecuación \eqref{equation:tone}. En particular, si se considera el caso de tonos puros consecutivos, obteniendo la representación en frecuencia cada cierto intervalo de tiempo, se pueden conseguir todas las notas musicales que componen dicha música. Cabe mencionar que se trabaja con una discretización de la función continua que modela la música. \\
+
+Para obtener la representación de la música en frecuencia, es decir, el espectro de frecuencias, se utiliza la Transformada Discreta de Fourier para cada uno de los intervalos de la función original. La Transformada Discreta de Fourier se define como:
+\begin{equation}
+X_{k} = \sum_{n=0}^{N-1}x_{n}e^{-i2\pi\frac{k}{N}n}
+\end{equation}
+donde $x_{n}$ es la función periódica que representa el tono puro y $N$ es su período.\\
+
 Para comenzar, la función de la figura \ref{lst:getFrequencies} recibe la ruta del archivo de sonido que se desea procesar. Utilizando la función de Octave, \texttt{wavread}, se obtiene el vector que representa la onda del sonido, $x$, junto a la frecuencia de muestro de dicha señal, $f_{s}$. Considerando intervalos de tiempo de $30 ms$, se divide a $x$ en vectores de $\frac{30}{1000}f_{s}$ elementos, ya que esa es la cantidad de muestreos del sonido que se realizan a lo largo de $30 ms$. Para cada uno de dichos vectores, se calcula la Transformada Discreta de Fourier usando la función que provee Octave, \texttt{fft}, la cual usa el algoritmo de la Transformada Rápida de Fourier. La ventaja de esto es que tiene $O(n\log n)$ en lugar de $O(n^{2})$. \\
 
 Cada vector $X$ que devuelve la función \texttt{fft}, pasa a ser la entrada para otra función llamada \texttt{fftshift}. El efecto de \texttt{fftshift} es mover los valores de $X$ para que queden centrados en torno a la frecuencia $0$. Finalmente, considerando los valores en que la frecuencia es positiva, es decir, la segunda mitad del vector $X$, se averigüa en qué valor de la frecuencia $X$ se maximiza. Ese valor es la frecuencia fundamental del intervalo considerado, que se guarda en el vector de frecuencias que devuelve la función en cuestión.\\
