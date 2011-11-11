@@ -1,5 +1,10 @@
 function f = noteToFrequency(triplet)
-	
+
+	if (triplet == "S--")
+		f = 0;	% Silence
+		return;
+	endif	
+
 	f_A4 = 440;
 	o_A4 = 4;
 	up_distance_to_new_octave = 3;

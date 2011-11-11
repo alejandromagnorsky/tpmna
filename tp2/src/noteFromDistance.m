@@ -1,25 +1,26 @@
-function note = noteFromDistance(distance, epsilon)
-	if (abs(distance - -9) <= epsilon)
+function note = noteFromDistance(distance)
+	distance = round(distance);
+	if ((distance - -9) == 0)
 		note = "C-";
-	elseif (abs(distance - -8) <= epsilon)
+	elseif ((distance - -8) == 0)
 		note = "C#";
-	elseif (abs(distance - -7) <= epsilon)
+	elseif ((distance - -7) == 0)
 		note = "D-";
-	elseif (abs(distance - -6) <= epsilon)
+	elseif ((distance - -6) == 0)
 		note = "Eb";
-	elseif (abs(distance - -5) <= epsilon)
+	elseif ((distance - -5) == 0)
 		note = "E-";
-	elseif (abs(distance - -4) <= epsilon)
+	elseif ((distance - -4) == 0)
 		note = "F-";
-	elseif (abs(distance - -3) <= epsilon)
+	elseif ((distance - -3) == 0)
 		note = "F#";
-	elseif (abs(distance - -2) <= epsilon)
+	elseif ((distance - -2) == 0)
 		note = "G-";
-	elseif (abs(distance - -1) <= epsilon)
+	elseif ((distance - -1) == 0)
 		note = "Ab";
-	elseif (abs(distance - 0) <= epsilon)
+	elseif ((distance - 0) == 0)
 		note = "A-";
-	elseif (abs(distance - 1) <= epsilon)
+	elseif ((distance - 1) == 0)
 		note = "Bb";
 	else
 		note = "B-";
