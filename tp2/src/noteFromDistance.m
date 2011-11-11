@@ -21,8 +21,6 @@ function note = noteFromDistance(distance, epsilon)
 		note = "A-";
 	elseif (abs(distance - 1) <= epsilon)
 		note = "Bb";
-	#elseif (abs(distance - 2) <= epsilon)
-	#	note = "B-";
 	else
 		note = "B-";
 	endif
