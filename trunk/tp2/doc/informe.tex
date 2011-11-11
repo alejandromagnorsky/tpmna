@@ -423,30 +423,28 @@ Para obtener la representación de la música en frecuencia, es decir, el espect
 \begin{equation}
 X_{k} = \sum_{n=0}^{N-1}x_{n}e^{-i2\pi\frac{k}{N}n}
 \end{equation}
-donde $x_{n}$ es la función periódica que representa al tono puro y $N$ es su período.\\
+donde $x_{n}$ es la función periódica que representa al tono puro y $N$ es la cantidad de muestras de dicho tono.\\
 
-Para comenzar, la función de la figura \ref{lst:getFrequencies} recibe la ruta del archivo de sonido que se desea procesar. Utilizando la función de Octave, \texttt{wavread}, se obtiene el vector que representa la onda del sonido, $x$, junto a la frecuencia de muestro de dicha señal, $f_{s}$. Considerando intervalos de tiempo de $30 ms$, se divide a $x$ en vectores de $\frac{30}{1000}f_{s}$ elementos, ya que esa es la cantidad de muestreos del sonido que se realizan a lo largo de $30 ms$. Para cada uno de dichos vectores, se calcula la Transformada Discreta de Fourier usando la función que provee Octave, \texttt{fft}, la cual usa el algoritmo de la Transformada Rápida de Fourier. La ventaja de esto es que tiene $O(n\log n)$ en lugar de $O(n^{2})$. \\
+Para comenzar, la función \texttt{getFrequencies} (figura \ref{lst:getFrequencies}) recibe la ruta del archivo de sonido que se desea procesar. Utilizando la función de Octave, \texttt{wavread}, se obtiene el vector que representa la onda del sonido, $x$, junto a la frecuencia de muestro de dicha señal, $f_{s}$. Considerando intervalos de tiempo de $30 ms$, se divide a $x$ en vectores de $\frac{30}{1000}f_{s}$ elementos, ya que esa es la cantidad de muestreos del sonido que se realizan a lo largo de $30 ms$. Para cada uno de dichos vectores, se calcula la Transformada Discreta de Fourier usando la función que provee Octave, \texttt{fft}, la cual usa el algoritmo de la Transformada Rápida de Fourier. La ventaja de esto es que tiene $O(n\log n)$ en lugar de $O(n^{2})$. \\
 
 Cada vector $X$ que devuelve la función \texttt{fft}, pasa a ser la entrada para otra función llamada \texttt{fftshift}. El efecto de \texttt{fftshift} es mover los valores de $X$ para que queden centrados en torno a la frecuencia $0$. Finalmente, considerando los valores en que la frecuencia es positiva, es decir, la segunda mitad del vector $X$, se averigüa en qué valor de la frecuencia $X$ se maximiza. Ese valor es la frecuencia fundamental del intervalo considerado, que se guarda en el vector de frecuencias que devuelve la función en cuestión.\\
 
-Utilizando el vector de frecuencias generado a partir de la función de la figura \ref{lst:getFrequencies}, la función de la figura \ref{lst:writePartiture} genera un vector de caracteres que representan los tripletes de cada una de las frecuencias.\\
+Utilizando el vector de frecuencias generado a partir de la función \texttt{getFrequencies}, la función \texttt{writePartiture} (figura \ref{lst:writePartiture}) genera un vector de caracteres que representan los tripletes de cada una de las frecuencias.\\
 
-Cabe destacar que debido a la naturaleza aproximativa del proceso de obtención de las frecuencias de un archivo de sonido, es necesario que tanto los métodos \textit{frequencyToNote} (figura \ref{lst:frequencyToNote}) como \textit{noteFromDistance} (figura \ref{lst:noteFromDistance}), utilizados directa e indirectamente por el algoritmo \ref{lst:writePartiture}, trabajen con cierto grado de error al momento de decidir el intervalo de frecuencias (octava de una nota) al cual pertenece una frecuencia dada, así como la distancia en medio tonos de cada nota respecto a un \textit{la} en la octava cuarta -\textit{A-4} en notación de tripletes-, respectivamente.\\
+Cabe destacar que es necesario que tanto los métodos \texttt{frequencyToNote} (figura \ref{lst:frequencyToNote}) como \texttt{noteFromDistance} (figura \ref{lst:noteFromDistance}), utilizados directa e indirectamente por la función \texttt{writePartiture}, trabajen con cierto grado de error, tanto al momento de decidir el intervalo de frecuencias (octava de una nota) al cual pertenece una frecuencia dada, como también al calcular la distancia en medio tonos de cada nota respecto a un \textit{la} en la octava cuarta (\textit{A-4} en notación de tripletes). Esto se debe a la naturaleza aproximativa del proceso de obtención de las frecuencias de un archivo de sonido.\\
 
 
 \subsection{Construcción de un archivo de sonido a partir de una partitura}
 El camino inverso al proceso descripto en el inciso \ref{subsection:partitureToWav} no presenta demasiadas complicaciones. Dado un vector
-compuesto por $n$ tripletes, la función \textit{readPartiture} de la figura \ref{lst:readPartiture} se encarga de transformar cada uno de ellos en la nota que les corresponda.
-Una vez finalizado dicho procedimiento (\textit{noteToFrequency}, figura \ref{lst:noteToFrequency}), se utiliza cada frecuencia $f_k$ para 
-construir un vector de valores $\mathbf{v^{f_k}}$, en donde el componente $v^{f_k}_i$ de dicho vector corresponde al resultado de la siguiente ecuación:
+compuesto por $n$ tripletes, la función \texttt{readPartiture} (figura \ref{lst:readPartiture}) se encarga de transformar cada uno de ellos en la nota que les corresponda usando la función \texttt{noteToFrequency} (figura \ref{lst:noteToFrequency}).
+Una vez finalizado dicho procedimiento, se utiliza cada frecuencia $f_k$ para construir un vector de valores $\mathbf{v^{f_k}}$, en donde el componente $v^{f_k}_i$ de dicho vector corresponde al resultado de la siguiente ecuación:
 \begin{equation}
- v^{f_k}_i = \sin(2\pi t_i f_k)
+v^{f_k}_i = \sin(2\pi t_i f_k)
 \end{equation}
-siendo $t_i$ el $i$-ésimo componente de un vector tiempo $t$ cuyos elementos son cada instante en un intervalo entre $0$ y $30 ms$ con un
-paso $\tfrac{1}{f_s}$ entre instantes dado.
+siendo $t_i$ el $i$-ésimo componente de un vector tiempo $t$ cuyos elementos van desde $0$ a $30 ms$ con pasos de $\tfrac{1}{f_s}$.
 
-Como resultado, se disponen de $n$ vectores $\mathbf{v^{f_k}}$ que son finalmente concatenados en uno único, listo para
-ser convertido a sonido mediante la función $wavwrite$ que ofrece Octave.
+Como resultado, se dispone de $n$ vectores $\mathbf{v^{f_k}}$ que son finalmente concatenados en uno único, listo para
+ser convertido a sonido mediante la función \texttt{wavwrite} que ofrece Octave.
 
 
 
@@ -456,6 +454,16 @@ ser convertido a sonido mediante la función $wavwrite$ que ofrece Octave.
 \label{section:results}
 \vspace{0.5cm}
 
+El archivo de sonido obtenido mediante el uso de \texttt{readPartiture} presenta cierto ruido entre tonos. El mismo es provocado por las discontinuidades entre los vectores $\mathbf{v^{f_k}}$ consecutivos. Por ese motivo, en la función \texttt{readPartiturev2} (figura \ref{lst:readPartiturev2}), se agrega al calculo original de $\mathbf{v^{f_k}}$, un desfase $\phi$: \\
+\begin{equation}
+\phi = \sum_{i=0}^{k-1} 2\pi f_{k}(t_{f}+\frac{1}{f_{s}})
+\end{equation}
+siendo $t_{f}$ la duración de un tono. De esta forma, $\mathbf{v^{f_k}}$ se obtiene calculando:
+\begin{equation}
+v^{f_k}_i = \sin(2\pi t_i f_k + \phi)
+\end{equation}
+
+Esto hace que la concatenación de los vectores $\mathbf{v^{f_k}}$ sea continua, eliminando así el ruido producido.
 
 
 
@@ -500,6 +508,9 @@ ser convertido a sonido mediante la función $wavwrite$ que ofrece Octave.
 
 \begin{figure}
 	\lstinputlisting[label=lst:readPartiture,caption=Implementación de la lectura de una partitura a partir de un conjunto de tripletes.]{../src/readPartiture.m}
+\end{figure}
+\begin{figure}
+	\lstinputlisting[label=lst:readPartiturev2,caption=Implementación mejorada de la lectura de una partitura a partir de un conjunto de tripletes.]{../src/readPartiturev2.m}
 \end{figure}
 \begin{figure}
 	\lstinputlisting[label=lst:noteToFrequency,caption=Implementación de la conversión de un triplete en una frecuencia.]{../src/noteToFrequency.m}
