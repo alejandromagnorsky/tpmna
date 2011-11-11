@@ -1,5 +1,5 @@
 function play(wavFile)
 	bps = 16;
 	sps = 11025;
-	readPartiture(sps, bps, writePartiture(getFrequencies(wavFile)));
+	readPartiturev2(sps, bps, writePartiture(getFrequencies(wavFile)));
 endfunction
