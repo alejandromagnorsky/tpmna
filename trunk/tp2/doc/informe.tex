@@ -438,14 +438,14 @@ Cabe destacar que debido a la naturaleza aproximativa del proceso de obtención 
 El camino inverso al proceso descripto en el inciso \ref{subsection:partitureToWav} no presenta demasiadas complicaciones. Dado un vector
 compuesto por $n$ tripletes, la función \textit{readPartiture} de la figura \ref{lst:readPartiture} se encarga de transformar cada uno de ellos en la nota que les corresponda.
 Una vez finalizado dicho procedimiento (\textit{noteToFrequency}, figura \ref{lst:noteToFrequency}), se utiliza cada frecuencia $f_k$ para 
-construir un vector de valores $v^{f_k}$, en donde el componente $v^{f_k}_i$ de dicho vector corresponde al resultado de la siguiente ecuación:
+construir un vector de valores $\mathbf{v^{f_k}}$, en donde el componente $v^{f_k}_i$ de dicho vector corresponde al resultado de la siguiente ecuación:
 \begin{equation}
  v^{f_k}_i = \sin(2\pi t_i f_k)
 \end{equation}
 siendo $t_i$ el $i$-ésimo componente de un vector tiempo $t$ cuyos elementos son cada instante en un intervalo entre $0$ y $30 ms$ con un
-cierto paso entre instantes dado.
+paso $\tfrac{1}{f_s}$ entre instantes dado.
 
-Como resultado, se disponen de $n$ vectores $v^{f_k}$ que son finalmente concatenados en uno único, listo para
+Como resultado, se disponen de $n$ vectores $\mathbf{v^{f_k}}$ que son finalmente concatenados en uno único, listo para
 ser convertido a sonido mediante la función $wavwrite$ que ofrece Octave.
 
 

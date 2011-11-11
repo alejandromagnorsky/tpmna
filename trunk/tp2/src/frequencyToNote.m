@@ -1,14 +1,19 @@
 function n = frequencyToNote(f)
-	
+
+	if (f == 0)
+		n = "S--";	% Silence
+		return;
+	endif
+
 	f_A4 = 440;
 	o_A4 = 4;
-	delta = 3;
+	delta = 5;
 	o_interval = [ 32.07 - delta , 61.73 + delta ];
 	up_distance_to_new_octave = 3;
 	down_distance_to_new_octave = 10;
 
 	octave = 1;
-	while(f != 0 && (f < o_interval(1) || o_interval(2) < f))
+	while(f < o_interval(1) || o_interval(2) < f)
 		o_interval = o_interval * 2;
 		octave = octave + 1;
 	endwhile
@@ -23,7 +28,7 @@ function n = frequencyToNote(f)
 		distance = distance - sign * (down_distance_to_new_octave + up_distance_to_new_octave - 1);
 	endif
 
-	n = noteFromDistance(distance, 0.5);
+	n = noteFromDistance(distance);
 	n = horzcat(n, num2str(octave));
 	
 endfunction
