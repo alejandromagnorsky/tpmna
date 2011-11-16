@@ -493,6 +493,8 @@ ser convertido a sonido mediante la función \texttt{wavwrite} que ofrece Octave
 \label{section:results}
 \vspace{0.5cm}
 
+\subsection{Ruido}
+
 El archivo de sonido obtenido mediante el uso de \texttt{readPartiture} presenta cierto ruido entre tonos. El mismo es provocado por las discontinuidades entre los vectores $\mathbf{v^{f_k}}$ consecutivos. Por ese motivo, en la función \texttt{readPartiturev2} (figura \ref{lst:readPartiturev2}), se agrega al calculo original de $\mathbf{v^{f_k}}$, un desfase $\phi$: \\
 \begin{equation}
 \phi = \sum_{i=0}^{k-1} 2\pi f_{k}(t_{f}+\frac{1}{f_{s}})
@@ -505,6 +507,9 @@ v^{f_k}_i = \sin(2\pi t_i f_k + \phi)
 Esto hace que la concatenación de los vectores $\mathbf{v^{f_k}}$ sea continua, eliminando así el ruido producido.
 
 
+\subsection{Comparación y experimentación}
+
+Utilizando un programa externo llamado \emph{Guitar Pro} que permite generar música a partir de partituras o tablaturas, se realiza una versión reducida de la obra conocida como \emph{When the Saints go marching in}; se genera un archivo de sonido con la melodía aproximada, sin respetar los tiempos de las notas. Dicha melodía es muy sencilla, con un timbre de piano digital. Luego, se ejecuta el programa para comparar el resultado con el archivo original. Inicialmente, la secuencia de frecuencias reconocidas resultante posee mucho ruido, y el archivo reconstruido también. Esto principalmente se debe a que el archivo de la melodía original no posee silencios y los tiempos de cada nota son muy reducidos. Es por esto que se ejecutar sólo el programa generador con la misma melodía pero descrita en tripletes va a dar mejores resultados.
 
 \vspace{1cm}
 \section{Conclusiones}
