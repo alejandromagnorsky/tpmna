@@ -283,7 +283,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Producción y análisis de música}
+\title{Síntesis y reconocimiento de obras musicales}
 %
 %
 % author names and IEEE memberships
@@ -402,41 +402,41 @@ Archivo de sonido; Partitura; Transformada de Fourier; Frecuencia.
 
 Existe mucho interés en el análisis de sonidos musicales. Desde el reconocimiento de las notas más significativas para fines tales como la generación de una partitura a partir de una canción, el cálculo de qué tan afinada está una grabación o incluso analizar qué escala se utiliza en cierta obra, hasta la sintetización de dichas notas para poder generar música a partir de sencillas partituras digitales. Se utilizará la escala conocida como de \emph{Temperamento Igual}, la cual divide la escala de frecuencias en fragmentos de doce niveles diferentes, mostrados en la Tabla \ref{table:Notas}. La relación de frecuencias entre notas sucesivas es siempre $ 2^\frac{1}{12} $. Cada fragmento de doce notas denota una octava, y es un múltiplo de la escala fundamental. \\
 
-La sección \ref{section:development} muestra principalmente el desarrollo del análisis, donde primero se muestra cómo analizar y reconstruir una secuencia de notas a partir de un archivo de sonido, y luego el análisis inverso, es decir, cómo construir un archivo de sonido a partir de una partitura digital. \\
+La sección \ref{section:development} muestra principalmente el desarrollo del análisis, donde primero se muestra cómo analizar y reconstruir una secuencia de notas a partir de un archivo de sonido, y luego el análisis inverso, es decir, cómo construir un archivo de sonido a partir de una partitura digital. También se provee un método de reducción de ruido. \\
 
-Luego, en la seccion \ref{section:results} se muestran algunos resultados de los programas realizados. \\
+Luego, en la seccion \ref{section:results} se muestran algunos resultados de los programas realizados con tres grabaciones distintas, se comparan y se encuentran interpretaciones de dichos resultados. \\
 
 Por último, la sección \ref{section:conclusions} ofrece conclusiones realizadas una vez obtenidos los resultados.
 
 \begin{table}
 \centering
-\begin{tabular}{|c|}
+\begin{tabular}{|c|c|}
 \hline
-Notación Latina \\
+Notación Latina & Notación Inglesa \\
 \hline
-do \\
+do & C\\
 \hline
-do \# \\
+do \# & C \# \\
 \hline
-re\\
+re& D\\
 \hline
-mi $\flat$ \\
+mi $\flat$ & E $\flat$ \\
 \hline
-mi \\
+mi & E\\
 \hline
-fa \\
+fa & F\\
 \hline
-fa \# \\
+fa \# & F\# \\
 \hline
-sol \\
+sol & G\\
 \hline
-la $\flat$ \\
+la $\flat$  & A $\flat$\\
 \hline
-la \\
+la & A\\
 \hline
-si $\flat$ \\
+si $\flat$ & B $\flat$\\
 \hline
-si \\
+si & B\\
 \hline
 \end{tabular}
 \caption{\label{table:Notas} Notas musicales}
@@ -485,14 +485,6 @@ siendo $t_i$ el $i$-ésimo componente de un vector tiempo $t$ cuyos elementos va
 Como resultado, se dispone de $n$ vectores $\mathbf{v^{f_k}}$ que son finalmente concatenados en uno único, listo para
 ser convertido a sonido mediante la función \texttt{wavwrite} que ofrece Octave.
 
-
-
-\vspace{1cm}
-%-------------------------------------------------------------------------
-\section{Resultados}
-\label{section:results}
-\vspace{0.5cm}
-
 \subsection{Ruido}
 
 El archivo de sonido obtenido mediante el uso de \texttt{readPartiture} presenta cierto ruido entre tonos. El mismo es provocado por las discontinuidades entre los vectores $\mathbf{v^{f_k}}$ consecutivos. Por ese motivo, en la función \texttt{readPartiturev2} (figura \ref{lst:readPartiturev2}), se agrega al calculo original de $\mathbf{v^{f_k}}$, un desfase $\phi$: \\
@@ -507,7 +499,11 @@ v^{f_k}_i = \sin(2\pi t_i f_k + \phi)
 Esto hace que la concatenación de los vectores $\mathbf{v^{f_k}}$ sea continua, eliminando así el ruido producido.
 
 
-\subsection{Comparación y experimentación}
+\vspace{1cm}
+%-------------------------------------------------------------------------
+\section{Resultados}
+\label{section:results}
+\vspace{0.5cm}
 
 A continuación se analizan y comparan algunos archivos de música y los resultados luego de ejecutar los algoritmos desarrollados.  \\
 
