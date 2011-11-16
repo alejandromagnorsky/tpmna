@@ -509,14 +509,20 @@ Esto hace que la concatenación de los vectores $\mathbf{v^{f_k}}$ sea continua,
 
 \subsection{Comparación y experimentación}
 
-Utilizando un programa externo llamado \emph{Guitar Pro} que permite generar música a partir de partituras o tablaturas, se realiza una versión reducida de la obra conocida como \emph{When the Saints go marching in}; se genera un archivo de sonido con la melodía aproximada, sin respetar los tiempos de las notas. Dicha melodía es muy sencilla, con un timbre de piano digital. Luego, se ejecuta el programa para comparar el resultado con el archivo original. Inicialmente, la secuencia de frecuencias reconocidas resultante posee mucho ruido, y el archivo reconstruido también. Esto principalmente se debe a que el archivo de la melodía original no posee silencios y los tiempos de cada nota son muy reducidos. Es por esto que se ejecutar sólo el programa generador con la misma melodía pero descrita en tripletes va a dar mejores resultados.
+A continuación se analizan y comparan algunos archivos de música y los resultados luego de ejecutar los algoritmos provistos.  \\
+
+El primer archivo analizado es \emph{beet5\_np.wav}, el cual al reconocer las frecuencias, aparecen varios picos que distorsionan el resultado final. En los primeros segundos de la obra el reconocedor parece tener problemas, aunque luego parece estabilizarse y la melodía aproximada puede escucharse. Esto probablemente se deba a que la primera secuencia de notas son continuas, ya que casi no hay silencio entre ellas.  \\
+
+El segundo archivo es \emph{twnkl\_np.wav}, el cual luego de analizarlo ofrece resultados mucho mejores comparados al anterior. Es posible que esto se deba a la casi fija longitud de las notas y al silencio marcado y extendido entre cada una de ellas. Además, si bien esta canción tiene dos melodías simultáneas, éstas tienen los mismos tiempos, por lo que es más fácil reconocerlas. Contrario es el caso de la obra anterior, en la que se encuentran dos melodías con distintos tiempos y silencios, lo cual complica el reconocimiento considerablemente. \\ 
+
+Utilizando un programa externo llamado \emph{Guitar Pro} que permite generar música a partir de partituras o tablaturas, se realiza una versión reducida de la obra conocida como \emph{When the Saints go marching in}; se genera un archivo de sonido con la melodía aproximada, sin respetar los tiempos de las notas. Dicha melodía es muy sencilla, con un timbre de piano digital. Luego, se ejecuta el programa para comparar el resultado con el archivo original. Inicialmente, la secuencia de frecuencias reconocidas resultante posee mucho ruido, y el archivo reconstruido también. Esto principalmente se debe a que el archivo de la melodía original no posee silencios y los tiempos de cada nota son muy reducidos. Es por esto que se ejecuta sólo el programa generador con la misma melodía pero descrita en tripletes va a dar mejores resultados.
 
 \vspace{1cm}
 \section{Conclusiones}
 \label{section:conclusions}
 \vspace{0.5cm}
 
-
+Se proponen métodos para el reconocimiento de sonidos musca partir de grabaciones existentes y sintetización de sonidos musicales a partir de una secuencia de tripletes. A su vez, se comparan los resultados y se propone un método de reducción de ruido. Por otro lado, existen posibles mejoras a los algoritmos expuestos, en particular al sintetizador. Dichas mejoras podrían ser la generación de notas con un timbre particular (y la sintetización de dichos timbres), o la posibilidad de definir el tiempo de una nota particular, hasta incluso poder generar varias notas de forma simultánea. De forma similar, se podría mejorar el algoritmo reconocedor agregandole la posibilidad de reconocer distintas melodías simultáneas, de forma que pueda generar una secuencia de tripletes por melodía o timbre reconocido. Sin embargo, estas mejoras están fuera del objetivo del trabajo y no fueron contempladas. Por último, más allá de la falta de dichas mejoras, los métodos desarrollados funcionan aproximadamente de la forma deseada, y son lo suficientemente sencillos como para considerarse una solución práctica y efectiva.
 
 %-------------------------------------------------------------------------
 
