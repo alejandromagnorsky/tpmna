@@ -418,15 +418,18 @@ para $\frac{1}{2} < r < 1$ y $0< t < 10$. \\
 Las condiciones de contorno, para $0 \leq t \leq 10$, son: \\
 \begin{equation}
 u(\frac{1}{2}, t) = t
+\label{equation:contour1}
 \end{equation}
 \begin{equation}
 u(1, t) = 100 + 40t
+\label{equation:contour2}
 \end{equation}
 
 
 Además, la condición inicial, para $\frac{1}{2} \leq r \leq 1$, es:
 \begin{equation}
 u(r, 0) = 200(r-0.5)
+\label{equation:initial}
 \end{equation}
 
 
@@ -452,6 +455,21 @@ Escribiendo las aproximaciones de las diferencias centradas en la ecuación \eqr
 v_{k}^{m+1} = 2v_{k}^{m} - v_{k}^{m-1} + \frac{4K\Delta t^{2}}{\Delta r^{2}} (v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}) + \frac{4K\Delta t^{2}}{2\Delta r (\frac{1}{2}+k\Delta r)} (v_{k+1}^{m}-v_{k-1}^{m})
 \label{equation:diffapprox}
 \end{equation}
+Las condiciones de contorno y la inicial se deducen de las ecuaciones \eqref{equation:contour1}, \eqref{equation:contour2} y \eqref{equation:initial} :
+\begin{equation}
+v_{0}^{m} = m\Delta t 
+\end{equation}
+\begin{equation}
+v_{n}^{m} = 100 + 40m\Delta t 
+\end{equation}
+\begin{equation}
+v_{k}^{0} = 200(\frac{1}{2}+k\Delta r - 0.5) 
+\end{equation}
+
+
+
+
+
 
 \vspace{1cm}
 %-------------------------------------------------------------------------
@@ -485,6 +503,9 @@ v_{k}^{m+1} = 2v_{k}^{m} - v_{k}^{m-1} + \frac{4K\Delta t^{2}}{\Delta r^{2}} (v_
 
 %-------------------------------------------------------------------------
 
+\begin{figure}
+	\lstinputlisting[label=lst:centeredDifferences,caption=Implementación del cálculo de $v_{k}^{m}$.]{../src/centeredDifferences.m}
+\end{figure}
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
