@@ -436,7 +436,7 @@ u(r, 0) = 200(r-0.5)
 El objetivo es, entonces, encontrar una aproximación $v_{k}^{m} \approx u(\frac{1}{2} + k\Delta r, m\Delta t)$, donde $k = 0,1,\dots,n$ 
 siendo $n = \frac{1-\frac{1}{2}}{\Delta r}$ y $m = 0,1,\dots,l$ con $l = \frac{10}{\Delta t}$. \\
 
-Para ello, se utilizan las siguientes diferencias centradas:
+Para ello, se utilizan las siguientes diferencias:
 \begin{equation}
 \frac{\partial^{2} u}{\partial r^{2}} = \frac{u(r+\Delta r, t) - 2 u(r,t) + u(r-\Delta r,t)}{\Delta r^{2}} + O(\Delta r^{2})
 \end{equation}
@@ -444,17 +444,18 @@ Para ello, se utilizan las siguientes diferencias centradas:
 \frac{\partial u}{\partial r} = \frac{u(r+\Delta r, t) - u(r-\Delta r,t)}{2\Delta r} + O(\Delta r^{2})
 \end{equation}
 \begin{equation}
-\frac{\partial^{2} u}{\partial t^{2}} = \frac{u(r, t + \Delta t) - 2 u(r,t) + u(r,t - \Delta t)}{\Delta t^{2}} + O(\Delta t^{2})
+\frac{\partial u}{\partial t} = \frac{u(r, t + \Delta t) - u(r,t)}{\Delta t} + O(\Delta t)
 \end{equation}
 
 Escribiendo las aproximaciones de las diferencias centradas en la ecuación \eqref{equation:diff}, se obtiene el siguiente esquema: \\
 \begin{equation}
-\frac{v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}}{\Delta r^{2}} + \frac{1}{\frac{1}{2}+k\Delta r} \frac{v_{k+1}^{m}-v_{k-1}^{m}}{2\Delta r} = \frac{1}{4K} \frac{v_{k}^{m+1} - 2v_{k}^{m} + v_{k}^{m-1}}{\Delta t^{2}}
+\frac{v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}}{\Delta r^{2}} + \frac{1}{\frac{1}{2}+k\Delta r} \frac{v_{k+1}^{m}-v_{k-1}^{m}}{2\Delta r} = \frac{1}{4K} \frac{v_{k}^{m+1} - v_{k}^{m}}{\Delta t}
 \end{equation}
 \begin{equation}
-v_{k}^{m+1} = 2v_{k}^{m} - v_{k}^{m-1} + \frac{4K\Delta t^{2}}{\Delta r^{2}} (v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}) + \frac{4K\Delta t^{2}}{2\Delta r (\frac{1}{2}+k\Delta r)} (v_{k+1}^{m}-v_{k-1}^{m})
+v_{k}^{m+1} = v_{k}^{m} + \frac{4K\Delta t}{\Delta r^{2}} (v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}) + \frac{4K\Delta t}{\Delta r + 2k\Delta r^{2}} (v_{k+1}^{m}-v_{k-1}^{m})
 \label{equation:diffapprox}
 \end{equation}
+
 Las condiciones de contorno y la inicial se deducen de las ecuaciones \eqref{equation:contour1}, \eqref{equation:contour2} y \eqref{equation:initial} :
 \begin{equation}
 v_{0}^{m} = m\Delta t 
