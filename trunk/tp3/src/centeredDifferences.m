@@ -15,7 +15,7 @@ function v = centeredDifferences(deltaR, deltaT)
 
 	for m=1:l
 		for k=2:n
-			v(m+1,k) = v(m,k) + 4*K*deltaT/deltaR^2 * (v(m,k+1) - 2*v(m,k) + v(m,k-1)) + 4*K*deltaT/(2*deltaR*(1/2+k*deltaR)) * (v(m,k+1) - v(m,k-1));
+			v(m+1,k) = v(m,k) + 4*K*deltaT/deltaR^2 * (v(m,k+1) - 2*v(m,k) + v(m,k-1)) + 4*K*deltaT/((1/2+(k-1)*deltaR)*2*deltaR) * (v(m,k+1) - v(m,k-1));
 		endfor
 	endfor
 
