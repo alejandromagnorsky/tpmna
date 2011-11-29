@@ -452,7 +452,7 @@ Escribiendo las aproximaciones de las diferencias centradas en la ecuación \eqr
 \frac{v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}}{\Delta r^{2}} + \frac{1}{\frac{1}{2}+k\Delta r} \frac{v_{k+1}^{m}-v_{k-1}^{m}}{2\Delta r} = \frac{1}{4K} \frac{v_{k}^{m+1} - v_{k}^{m}}{\Delta t}
 \end{equation}
 \begin{equation}
-v_{k}^{m+1} = v_{k}^{m} + \frac{4K\Delta t}{\Delta r^{2}} (v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}) + \frac{4K\Delta t}{\Delta r + 2k\Delta r^{2}} (v_{k+1}^{m}-v_{k-1}^{m})
+v_{k}^{m+1} = v_{k}^{m} + \frac{4K\Delta t}{\Delta r^{2}} (v_{k+1}^{m} - 2v_{k}^{m} + v_{k-1}^{m}) + \frac{4K\Delta t}{(\frac{1}{2}+k\Delta r)2\Delta r} (v_{k+1}^{m}-v_{k-1}^{m})
 \label{equation:diffapprox}
 \end{equation}
 
