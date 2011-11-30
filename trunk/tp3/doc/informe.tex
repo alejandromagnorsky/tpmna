@@ -283,7 +283,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Síntesis y reconocimiento de obras musicales}
+\title{Deformación de un cilindro mediante calor}
 %
 %
 % author names and IEEE memberships
@@ -413,7 +413,7 @@ La temperatura de un cilindro uniforme puede modelarse como una función $u(r,t)
 \frac{\partial^{2} u}{\partial r^{2}} + \frac{1}{r} \frac{\partial u}{\partial r} = \frac{1}{4K} \frac{\partial u}{\partial t}
 \label{equation:diff}
 \end{equation}
-para $\frac{1}{2} < r < 1$ y $0< t < 10$. \\
+para $\frac{1}{2} < r < 1$, $0< t < 10$ y $K = 0.1$. \\
 
 Las condiciones de contorno, para $0 \leq t \leq 10$, son: \\
 \begin{equation}
@@ -463,13 +463,51 @@ v_{k}^{m+1} = v_{k}^{m} + \frac{4K\Delta t}{\Delta r^{2}} (v_{k+1}^{m} - 2v_{k}^
 Las condiciones de contorno y la inicial se deducen de las ecuaciones \eqref{equation:contour1}, \eqref{equation:contour2} y \eqref{equation:initial} :
 \begin{equation}
 v_{0}^{m} = m\Delta t 
+\label{equation:vcontour1}
 \end{equation}
 \begin{equation}
 v_{n}^{m} = 100 + 40m\Delta t 
+\label{equation:vcontour2}
 \end{equation}
 \begin{equation}
 v_{k}^{0} = 200(\frac{1}{2}+k\Delta r - 0.5) 
+\label{equation:vinitial}
 \end{equation}
+
+Las diferencias finitas, utilizadas para construir el esquema de la ecuación \eqref{equation:diffapprox}, tienen errores de $O(\Delta r^{2})$ y $O(\Delta t)$. Por lo tanto, el esquema tiene $O(\Delta r^{2} + \Delta t)$, es decir, orden (2,1). \\
+
+Para analizar la estabilidad, se aplica la Transformada de Fourier de Tiempo Discreto en ambos miembros del esquema de la ecuación \eqref{equation:diffapprox}, junto a las propiedades de desplazamiento en el tiempo y linealidad \citep{mathews}, obteniendo:
+
+\begin{equation}
+V_{k}^{m+1} = V_{k}^{m} + \frac{4K\Delta t}{\Delta r^{2}} (V_{k}^{m} e^{i\omega}- 2V_{k}^{m} + V_{k}^{m} e^{-i\omega}) + \frac{4K\Delta t}{r 2\Delta r} (V_{k}^{m} e^{i\omega} - V_{k}^{m} e^{-i\omega})
+\end{equation}
+
+Despejando $V_{k}^{m}$:
+
+\begin{equation}
+V_{k}^{m+1} = (1 + \frac{4K\Delta t}{\Delta r^{2}} (e^{i\omega} + e^{-i\omega}) - 2\frac{4K\Delta t}{\Delta r^{2}} + \frac{4K\Delta t}{r 2\Delta r} (e^{i\omega} - e^{-i\omega})) V_{k}^{m}
+\end{equation}
+\begin{equation}
+V_{k}^{m+1} = (1 + 2 \frac{4K\Delta t}{\Delta r^{2}}(\cos \omega - 1) + i 2 \frac{4K\Delta t}{r 2\Delta r} \sin \omega) V_{k}^{m}
+\end{equation}
+
+Se define $\rho = 1 + 2 \frac{4K\Delta t}{\Delta r^{2}}(\cos \omega - 1) + i 2 \frac{4K\Delta t}{r 2\Delta r} \sin \omega$. Entonces:
+
+\begin{equation}
+V_{k}^{m+1} = \rho V_{k}^{m}
+\end{equation}
+\begin{equation}
+V_{k}^{m+1} = \rho^{m+1} V_{k}^{0}
+\end{equation}
+
+Por lo tanto, $|\rho| < 1$ para que el método sea estable. Para que eso se cumpla, como mínimo, $|Im(\rho)| < 1$:
+\begin{equation}
+|2 \frac{4K\Delta t}{r 2\Delta r} \sin \omega| <1 \Rightarrow \frac{4K\Delta t}{r 2\Delta r} < \frac{1}{2} \Rightarrow \Delta t < \frac{r\Delta r}{4 K}
+\end{equation}
+
+Considerando los casos en que $r = \frac{1}{2}$ y $r = 1$, se obtiene que el caso más restrictivo es que $\Delta t < \frac{\Delta r}{8 K}$. \\
+
+En la figura \ref{lst:finiteDifferences}, se detalla la implementación de un programa que, dados $\Delta r$ y $\Delta t$, utiliza las condiciones de contorno y la inicial de las ecuaciones \eqref{equation:vcontour1}, \eqref{equation:vcontour2} y \eqref{equation:vinitial} para armar parte de la matriz $v$ que representa a la función $v_{k}^{m}$, donde $k$ es la columna y $m$ es la fila. Para completar el resto, usa el esquema de la ecuación \eqref{equation:diffapprox}. \\
 
 
 
