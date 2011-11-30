@@ -366,6 +366,9 @@
 
 \begin{abstract}
 \boldmath
+En este artículo se expone un método numérico para calcular la deformación de un cilindro debido a su temperatura.
+Primero se obtiene la función de temperatura del cilindro en función del radio y del tiempo, resolviendo una ecuación
+diferencial a derivadas parciales. Luego, se encuentra la deformación del cilindro realizando una integral por medio del método de los trapecios. 
 
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
@@ -398,7 +401,17 @@ Cilindro; Temperatura; Deformación; Diferencias finitas.
 \IEEEpeerreviewmaketitle
 \vspace{1cm}
 
+
 \section{Introducción}
+
+La necesidad de calcular las deformaciones de un cilindro en base a su temperatura es de mucha utilidad. Desde pistones
+en pequeños motores hasta maquinarias industriales, pasando por circuitos eléctricos, se vuelve de trascendental importancia poder preveer su comportamiento en base a su calentamiento o enfriamiento. \\
+
+La sección \ref{section:development} muestra principalmente el desarrollo de la ecuación diferencial a derivadas parciales que describe a la función de temperatura del cilindro. Luego se expone la fórmula para obtener la deformación del cilindro en función del tiempo. \\
+
+Luego, en la seccion \ref{section:results} se muestran los resultados de los programas realizados junto con gráficos que permiten visualizar con mayor precisión la función de temperatura y la de deformación. \\
+
+Por último, la sección \ref{section:conclusions} ofrece conclusiones realizadas una vez obtenidos los resultados.
 
 
 \vspace{1cm}
@@ -507,7 +520,7 @@ Por lo tanto, $|\rho| < 1$ para que el método sea estable. Para que eso se cump
 
 Considerando los casos en que $r = \frac{1}{2}$ y $r = 1$, se obtiene que el caso más restrictivo es que $\Delta t < \frac{\Delta r}{8 K}$. \\
 
-En la figura \ref{lst:finiteDifferences}, se detalla la implementación de un programa que, dados $\Delta r$ y $\Delta t$, utiliza las condiciones de contorno y la inicial (ecuaciones \eqref{equation:vcontour1}, \eqref{equation:vcontour2} y \eqref{equation:vinitial}) para armar parte de la matriz $v$ que representa a la función $v_{k}^{m}$, donde $k$ es la columna y $m$ es la fila. Para completar el resto, usa el esquema de la ecuación \eqref{equation:diffapprox}. \\
+En el listado \ref{lst:finiteDifferences}, se detalla la implementación de un programa que, dados $\Delta r$ y $\Delta t$, utiliza las condiciones de contorno y la inicial (ecuaciones \eqref{equation:vcontour1}, \eqref{equation:vcontour2} y \eqref{equation:vinitial}) para armar parte de la matriz $v$ que representa a la función $v_{k}^{m}$, donde $k$ es la columna y $m$ es la fila. Para completar el resto, usa el esquema de la ecuación \eqref{equation:diffapprox}. \\
 
 
 
@@ -520,8 +533,9 @@ d(t) = \alpha \int_{\frac{1}{2}}^{1} u(r,t)r dr
 \end{equation}
 donde $\alpha = 10.7$. \\
 
-Para el cálculo de la ecuación \eqref{equation:deformation} se utiliza el método de los trapecios. Se calcula $d(10)$ con parámetros cada vez más chicos, hasta que la diferencia con el resultado anterior sea menor que el 5\%.
+Para el cálculo de la ecuación \eqref{equation:deformation} se utiliza el método de los trapecios. \\
 
+En el listado \ref{lst:stableDef}, se detalla la implementación del cálculo de la deformación para cualquier valor de $t$. En particular, para $tIndex = \frac{10}{\Delta t} + 1$, se obtiene la deformación para el régimen permanente, es decir, para $t = 10$.
 
 
 \vspace{1cm}
@@ -530,32 +544,38 @@ Para el cálculo de la ecuación \eqref{equation:deformation} se utiliza el mét
 \label{section:results}
 \vspace{0.5cm}
 
-Para realizar todos los cálculos se utiliza $\Delta r = 0.1$ y $\Delta t = 0.01$.
+Para realizar todos los cálculos se utiliza $\Delta r = 0.1$ y $\Delta t = 0.01$. \\
+
+En la figura \ref{figure:graphC} pueden verse los resultados de las curvas de temperatura para $ r = 0.6,0.7,0.8 $ y $0.9$. Estas curvas demuestran que el cilindro tiene temperaturas mayores según la distancia al eje central, y además crece con una tendencia lineal a medida que transcurre el tiempo. Esto se debe a las condiciones de contorno en $r=\frac{1}{2}$ y $r=1$, ya que son crecientes en el tiempo. \\
+
+Además, en la figura \ref{figure:mesh} se visualiza el campo $u(r,t)$. Como puede verse, respalda los resultados de las curvas de temperatura recién mencionadas, ya que la temperatura aumenta con el radio y el tiempo. Sin embargo, el resultado no es tan lineal como inicialmente parece, ya que si se examina $u(r,10)$ se obtiene la curva del régimen permanente, graficado en la figura \ref{figure:graphD}. Cabe mencionar que la curva exhibe una geometría levemente convexa. \\
+
+Por último, se calcula la deformación del cilindro en función del tiempo. Dicha deformación puede verse en la figura \ref{figure:deformation}, la cual denota un comportamiento aproximadamente lineal. Como tanto la deformación como la temperatura son crecientes en el tiempo, se puede deducir que la deformación es linealmente proporcional a la temperatura. Además, el valor de la deformación para el régimen permanente es $d(10) = 1242.5$, lo cual se confirma con el gráfico de la figura \ref{figure:deformation}. \\
 
 
 \begin{figure}[hbp]
 	\centering
 	\includegraphics[scale = 0.50]{img/graph_c.png}
 	\caption{Temperatura del cilindro para $r = 0.6,0.7,0.8$ y $0.9$}
-	\label{figure:histograms}
+	\label{figure:graphC}
 \end{figure}
 \begin{figure}
 	\centering
 	\includegraphics[scale = 0.25]{img/graph_mesh.png}
 	\caption{Evolución de la temperatura del cilindro}
-	\label{figure:histograms}
+	\label{figure:mesh}
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[scale = 0.25]{img/graph_d.png}
+	\includegraphics[scale = 0.35]{img/graph_d.png}
 	\caption{Temperatura en régimen permamente}
-	\label{figure:histograms}
+	\label{figure:graphD}
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[scale = 0.25]{img/graph_e.png}
+	\includegraphics[scale = 0.35]{img/graph_e.png}
 	\caption{Deformación del cilindro}
-	\label{figure:histograms}
+	\label{figure:deformation}
 \end{figure}
 
 
@@ -564,6 +584,10 @@ Para realizar todos los cálculos se utiliza $\Delta r = 0.1$ y $\Delta t = 0.01
 \section{Conclusiones}
 \label{section:conclusions}
 \vspace{0.5cm}
+
+Concluyendo, se exponen métodos numéricos para la resolución de ecuaciones diferenciales a derivadas parciales y se analizan los resultados obtenidos, graficándolos además en determinados casos. \\
+
+Las temperaturas obtenidas evidencian una tendencia lineal y creciente en función de $r$ y $t$. Dicha tendencia puede ser útil para generar una aproximación lineal, reduciéndose así las complejidades temporales del cálculo. A su vez, la deformación es mayor a medida que la temperatura aumenta.
 
 
 
@@ -586,6 +610,14 @@ Para realizar todos los cálculos se utiliza $\Delta r = 0.1$ y $\Delta t = 0.01
 
 \begin{figure}
 	\lstinputlisting[label=lst:finiteDifferences,caption=Implementación del cálculo de $v_{k}^{m}$.]{../src/finiteDifferences.m}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[label=lst:stableDef,caption=Implementación del calculo de la deformación para un t.]{../src/stable_deformation.m}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[label=lst:graphe,caption=Implementación del cálculo de la deformación para $0 < t < 10$.]{../src/graph_e.m}
 \end{figure}
 
 % trigger a \newpage just before the given reference
