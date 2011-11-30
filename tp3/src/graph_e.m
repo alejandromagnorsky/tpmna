@@ -17,6 +17,8 @@ function graph_e(deltaR, deltaT)
 	ylabel("Deformación");
 					
 	print -dpng "-S1100,720" graph_e.png	
+
+	d(tTotal+1)
 	
 endfunction
 
