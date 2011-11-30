@@ -1,6 +1,6 @@
 function graph_e(deltaR, deltaT)
 
-	v = centeredDifferences(deltaR, deltaT);
+	v = finiteDifferences(deltaR, deltaT);
 				
 	tTotal = 10/deltaT;
 	

@@ -1,6 +1,6 @@
 function graph_c(deltaR, deltaT)
 
-	v = centeredDifferences(deltaR, deltaT);
+	v = finiteDifferences(deltaR, deltaT);
 	
 	r = .6:.9;
 	

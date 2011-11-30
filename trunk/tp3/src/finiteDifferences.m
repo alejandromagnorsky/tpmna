@@ -1,4 +1,4 @@
-function v = centeredDifferences(deltaR, deltaT)
+function v = finiteDifferences(deltaR, deltaT)
 
 	K = 0.1;
 	n = (1/2)/deltaR;

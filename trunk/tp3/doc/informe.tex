@@ -436,16 +436,20 @@ u(r, 0) = 200(r-0.5)
 El objetivo es, entonces, encontrar una aproximación $v_{k}^{m} \approx u(\frac{1}{2} + k\Delta r, m\Delta t)$, donde $k = 0,1,\dots,n$ 
 siendo $n = \frac{1-\frac{1}{2}}{\Delta r}$ y $m = 0,1,\dots,l$ con $l = \frac{10}{\Delta t}$. \\
 
-Para ello, se utilizan las siguientes diferencias:
+Para ello, se utilizan las siguientes diferencias finitas:
+\begin{itemize}
+\item Centradas \\
 \begin{equation}
 \frac{\partial^{2} u}{\partial r^{2}} = \frac{u(r+\Delta r, t) - 2 u(r,t) + u(r-\Delta r,t)}{\Delta r^{2}} + O(\Delta r^{2})
 \end{equation}
 \begin{equation}
 \frac{\partial u}{\partial r} = \frac{u(r+\Delta r, t) - u(r-\Delta r,t)}{2\Delta r} + O(\Delta r^{2})
 \end{equation}
+\item Progresiva \\
 \begin{equation}
 \frac{\partial u}{\partial t} = \frac{u(r, t + \Delta t) - u(r,t)}{\Delta t} + O(\Delta t)
 \end{equation}
+\end{itemize}
 
 Escribiendo las aproximaciones de las diferencias centradas en la ecuación \eqref{equation:diff}, se obtiene el siguiente esquema: \\
 \begin{equation}
@@ -505,7 +509,7 @@ v_{k}^{0} = 200(\frac{1}{2}+k\Delta r - 0.5)
 %-------------------------------------------------------------------------
 
 \begin{figure}
-	\lstinputlisting[label=lst:centeredDifferences,caption=Implementación del cálculo de $v_{k}^{m}$.]{../src/centeredDifferences.m}
+	\lstinputlisting[label=lst:finiteDifferences,caption=Implementación del cálculo de $v_{k}^{m}$.]{../src/finiteDifferences.m}
 \end{figure}
 
 % trigger a \newpage just before the given reference
