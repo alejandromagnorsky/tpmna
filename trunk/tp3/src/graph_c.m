@@ -13,6 +13,7 @@ function graph_c(deltaR, deltaT)
 	for i=1:rStep:rTotal-rStep
 		subplot(2,2,i);
 		plot(0:deltaT:10,v(:,i+rStep));
+		axis( [ 0, 10, 0, 450 ] );
 		title(strcat("Temperatura en r=", num2str(1/2 + i*deltaR)) );
 		xlabel("Tiempo");
 		ylabel("Temperatura");
