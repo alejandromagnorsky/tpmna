@@ -1,6 +1,5 @@
-function d = stable_deformation(deltaR, deltaT)
+function d = stable_deformation(deltaR, deltaT, v, tIndex)
 	r = .5:deltaR:1;
-	v = finiteDifferences(deltaR, deltaT);
-	ur = u_times_r(r, v, 10, deltaT);
+	ur = v(tIndex,:) .* r;
 	d = 10.7 * trapz(r, ur);
 endfunction
