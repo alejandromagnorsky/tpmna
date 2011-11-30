@@ -6,8 +6,7 @@ function graph_e(deltaR, deltaT)
 	
 	t = 0:deltaT:10;
 	for i=1:tTotal+1
-		[tmp a] =  quadv(@u_integrable, .5, 1, .1, false, i, v, deltaR);
-		d(i) = 10.7 * tmp;
+		d(i) =  stable_deformation(deltaR, deltaT, v, i );
 	endfor
 	
 	plot(t, d);
