@@ -377,7 +377,7 @@
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-
+Cilindro; temperatura; deformación; diferencias finitas
 \end{IEEEkeywords}
 
 
@@ -507,8 +507,18 @@ Por lo tanto, $|\rho| < 1$ para que el método sea estable. Para que eso se cump
 
 Considerando los casos en que $r = \frac{1}{2}$ y $r = 1$, se obtiene que el caso más restrictivo es que $\Delta t < \frac{\Delta r}{8 K}$. \\
 
-En la figura \ref{lst:finiteDifferences}, se detalla la implementación de un programa que, dados $\Delta r$ y $\Delta t$, utiliza las condiciones de contorno y la inicial de las ecuaciones \eqref{equation:vcontour1}, \eqref{equation:vcontour2} y \eqref{equation:vinitial} para armar parte de la matriz $v$ que representa a la función $v_{k}^{m}$, donde $k$ es la columna y $m$ es la fila. Para completar el resto, usa el esquema de la ecuación \eqref{equation:diffapprox}. \\
+En la figura \ref{lst:finiteDifferences}, se detalla la implementación de un programa que, dados $\Delta r$ y $\Delta t$, utiliza las condiciones de contorno y la inicial (ecuaciones \eqref{equation:vcontour1}, \eqref{equation:vcontour2} y \eqref{equation:vinitial}) para armar parte de la matriz $v$ que representa a la función $v_{k}^{m}$, donde $k$ es la columna y $m$ es la fila. Para completar el resto, usa el esquema de la ecuación \eqref{equation:diffapprox}. \\
 
+
+
+\subsection{Cálculo de la deformación del cilindro}
+
+La deformación del cilindro, $d$, es proporcional a la temperatura media del mismo. Por lo tanto, se calcula como:
+\begin{equation}
+d = \alpha \int_{\frac{1}{2}}^{1} u(r,t)r dr
+\label{equation:deformation}
+\end{equation}
+donde $\alpha = 10.7$.
 
 
 
@@ -519,6 +529,34 @@ En la figura \ref{lst:finiteDifferences}, se detalla la implementación de un pr
 \section{Resultados}
 \label{section:results}
 \vspace{0.5cm}
+
+Para realizar todos los cálculos se utiliza $\Delta r = 0.1$ y $\Delta t = 0.01$.
+
+
+\begin{figure}[hbp]
+	\centering
+	\includegraphics[scale = 0.50]{img/graph_c.png}
+	\caption{Temperatura del cilindro para $r = 0.6,0.7,0.8$ y $0.9$}
+	\label{figure:histograms}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[scale = 0.25]{img/graph_mesh.png}
+	\caption{Evolución de la temperatura del cilindro}
+	\label{figure:histograms}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[scale = 0.25]{img/graph_d.png}
+	\caption{Temperatura en régimen permamente}
+	\label{figure:histograms}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[scale = 0.25]{img/graph_e.png}
+	\caption{Deformación del cilindro}
+	\label{figure:histograms}
+\end{figure}
 
 
 
