@@ -11,9 +11,9 @@ function graph_e(deltaR, deltaT)
 	
 	plot(t, d);
 		
-	title("Deformación de un cilindro por temperatura");
+	title("Deformacion de un cilindro por temperatura");
 	xlabel("Tiempo");
-	ylabel("Deformación");
+	ylabel("Deformacion");
 					
 	print -dpng "-S1100,720" graph_e.png	
 
