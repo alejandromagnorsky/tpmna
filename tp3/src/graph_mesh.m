@@ -1,6 +1,6 @@
 function graph_mesh(deltaR, deltaT)
 
-	v = centeredDifferences(deltaR, deltaT);
+	v = finiteDifferences(deltaR, deltaT);
 	
 	surf((1/2):deltaR:1,0:deltaT:10,v);
 	

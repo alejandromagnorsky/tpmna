@@ -1,5 +1,5 @@
 function graph_d(deltaR, deltaT)
-	v = centeredDifferences(deltaR, deltaT);
+	v = finiteDifferences(deltaR, deltaT);
 	
 	tTotal = 10/deltaT;
 	plot(1/2:deltaR:1,v(tTotal+1,:));
