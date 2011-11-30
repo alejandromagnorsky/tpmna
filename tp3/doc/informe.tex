@@ -377,7 +377,7 @@
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Cilindro; temperatura; deformación; diferencias finitas
+Cilindro; Temperatura; Deformación; Diferencias finitas.
 \end{IEEEkeywords}
 
 
@@ -515,12 +515,12 @@ En la figura \ref{lst:finiteDifferences}, se detalla la implementación de un pr
 
 La deformación del cilindro, $d$, es proporcional a la temperatura media del mismo. Por lo tanto, se calcula como:
 \begin{equation}
-d = \alpha \int_{\frac{1}{2}}^{1} u(r,t)r dr
+d(t) = \alpha \int_{\frac{1}{2}}^{1} u(r,t)r dr
 \label{equation:deformation}
 \end{equation}
-donde $\alpha = 10.7$.
+donde $\alpha = 10.7$. \\
 
-
+Para el cálculo de la ecuación \eqref{equation:deformation} se utiliza el método de los trapecios. Se calcula $d(10)$ con parámetros cada vez más chicos, hasta que la diferencia con el resultado anterior sea menor que el 5\%.
 
 
 
